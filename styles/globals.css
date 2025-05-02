@@ -91,4 +91,8 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+
+  .uid {
+    border: 2px solid red;
+  }
 }
