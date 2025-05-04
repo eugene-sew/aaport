@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "Asmau Ayub - Licensed Counseling Psychologist",
   description:
     "Portfolio of Asmau Ayub, a Licensed Counseling Psychologist and PhD candidate in Counselor Education & Supervision",
-  generator: "v0.dev",
+    
 };
 
 export default function RootLayout({

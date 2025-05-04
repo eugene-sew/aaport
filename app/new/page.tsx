@@ -18,7 +18,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import BlobBackground from "@/components/blob-background";
-
+import AwardsAndHonorsSection from "@/components/new/AwardsAndHonorsSection";
+import TeachingExperienceSection from "@/components/new/TeachingExperienceSection";
+import ResearchProjectsSection from "@/components/new/ResearchProjectsSection";
 export default function Home() {
   return (
     <div className="relative">
@@ -65,7 +67,7 @@ export default function Home() {
             <div className="container px-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
                 <div className="bg-white p-8 md:p-12">
-                  <h3 className="text-amber-600 mb-6">What I Do</h3>
+                  <h3 className="text-[#FF2819] mb-6">Who Am I</h3>
                   <h2 className="text-3xl font-bold mb-6">
                     Ph.D. Candidate <br />
                     at Michigan <br />
@@ -73,23 +75,25 @@ export default function Home() {
                   </h2>
                   <Button
                     asChild
-                    className="bg-amber-500 hover:bg-amber-600 mt-4"
+                    className="bg-[#FF2819] hover:bg-[#FF2819]/90 mt-4 rounded"
                   >
                     <Link href="/about">Read More</Link>
                   </Button>
                 </div>
-                <div className="bg-primary p-8 md:p-12">
-                  <h3 className="text-white mb-6">Short Biography</h3>
-                  <p className="text-white">
-                    Discover the journey of Asmau, a dedicated and passionate
-                    doctoral candidate in the Counselor Education and
-                    Supervision program at Michigan State University. With a
-                    specialization in Rehabilitation Counseling, she combines
-                    her extensive background in mental health, education, and
-                    community service to foster positive change. Here, you'll
-                    find detailed insights into her professional experiences,
-                    research endeavors, teaching responsibilities, and
-                    leadership roles within the community.
+                <div className="bg-[#FF2819] p-8 md:p-12">
+                  <h3 className="text-white mt-5 mb-2 text-start font-semibold underline underline-offset-8">
+                    Short Biography
+                  </h3>
+                  <p className="text-white text-start leading-loose">
+                    <span className="text-5xl">D</span>iscover the journey of
+                    Asmau, a dedicated and passionate doctoral candidate in the
+                    Counselor Education and Supervision program at Michigan
+                    State University. With a specialization in Rehabilitation
+                    Counseling, she combines her extensive background in mental
+                    health, education, and community service to foster positive
+                    change. Here, you'll find detailed insights into her
+                    professional experiences, research endeavors, teaching
+                    responsibilities, and leadership roles within the community.
                   </p>
                 </div>
               </div>
@@ -113,260 +117,12 @@ export default function Home() {
       </section>
 
       {/* Research Projects Section */}
-      <section className="py-16 md:py-24 bg-muted z-10">
-        <div className="container">
-          <div className="mb-12 text-center">
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl mb-4">
-              Current Research Projects
-            </h2>
-            <p className="mx-auto max-w-2xl text-muted-foreground">
-              My research focuses on counselor education, supervision
-              methodologies, and multicultural competence in mental health
-              interventions.
-            </p>
-          </div>
-
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <Card className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
-              <CardHeader className="pb-2">
-                <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300 w-fit">
-                  <BookOpen className="h-6 w-6" />
-                </div>
-                <CardTitle>Multicultural Supervision Models</CardTitle>
-                <CardDescription>2022 - Present</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Examining how different approaches to multicultural
-                  supervision influence the development of cultural competence
-                  in counselors-in-training through mixed-methods research.
-                </p>
-              </CardContent>
-              <CardFooter>
-                <Link
-                  href="/research"
-                  className="inline-flex items-center text-sm font-medium text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
-                >
-                  Learn More
-                  <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </CardFooter>
-            </Card>
-
-            <Card className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
-              <CardHeader className="pb-2">
-                <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300 w-fit">
-                  <Users className="h-6 w-6" />
-                </div>
-                <CardTitle>Social Justice Advocacy Training</CardTitle>
-                <CardDescription>2021 - Present</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Evaluating the implementation and outcomes of social justice
-                  advocacy training components within counselor education
-                  programs through longitudinal assessment.
-                </p>
-              </CardContent>
-              <CardFooter>
-                <Link
-                  href="/research"
-                  className="inline-flex items-center text-sm font-medium text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
-                >
-                  Learn More
-                  <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </CardFooter>
-            </Card>
-
-            <Card className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
-              <CardHeader className="pb-2">
-                <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300 w-fit">
-                  <FileText className="h-6 w-6" />
-                </div>
-                <CardTitle>Trauma-Informed Supervision</CardTitle>
-                <CardDescription>2022 - Present</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Identifying best practices in trauma-informed supervision and
-                  assessing the training needs of supervisors working with
-                  counselors who provide trauma treatment.
-                </p>
-              </CardContent>
-              <CardFooter>
-                <Link
-                  href="/research"
-                  className="inline-flex items-center text-sm font-medium text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
-                >
-                  Learn More
-                  <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </CardFooter>
-            </Card>
-          </div>
-
-          <div className="mt-10 text-center">
-            <Button asChild className="bg-red-600 hover:bg-red-700">
-              <Link href="/research">View All Research</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+      <ResearchProjectsSection />
+      {/* Teaching Experience Section */}
+      <TeachingExperienceSection />
 
       {/* Featured Sections */}
-      <section className="py-16 md:py-24">
-        <div className="container">
-          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
-            Areas of Expertise
-          </h2>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <Card className="group overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
-              <CardHeader className="pb-2">
-                <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300">
-                  <BookOpen className="h-6 w-6" />
-                </div>
-                <CardTitle>Research</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  Focused on counselor education, supervision methodologies, and
-                  mental health interventions.
-                </CardDescription>
-              </CardContent>
-              <CardFooter>
-                <Link
-                  href="/research"
-                  className="inline-flex items-center text-sm font-medium text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
-                >
-                  View Research
-                  <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </CardFooter>
-            </Card>
-
-            <Card className="group overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
-              <CardHeader className="pb-2">
-                <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300">
-                  <FileText className="h-6 w-6" />
-                </div>
-                <CardTitle>Publications</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  Academic articles, book chapters, and conference presentations
-                  on counseling psychology.
-                </CardDescription>
-              </CardContent>
-              <CardFooter>
-                <Link
-                  href="/research/publications"
-                  className="inline-flex items-center text-sm font-medium text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
-                >
-                  Browse Publications
-                  <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </CardFooter>
-            </Card>
-
-            <Card className="group overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
-              <CardHeader className="pb-2">
-                <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300">
-                  <Award className="h-6 w-6" />
-                </div>
-                <CardTitle>Teaching</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  Courses in counseling theories, techniques, and professional
-                  development for future counselors.
-                </CardDescription>
-              </CardContent>
-              <CardFooter>
-                <Link
-                  href="/teaching"
-                  className="inline-flex items-center text-sm font-medium text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
-                >
-                  Explore Teaching
-                  <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </CardFooter>
-            </Card>
-
-            <Card className="group overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
-              <CardHeader className="pb-2">
-                <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300">
-                  <Users className="h-6 w-6" />
-                </div>
-                <CardTitle>Professional Leadership</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  Supervision, mentorship, and community service in the field of
-                  counseling psychology.
-                </CardDescription>
-              </CardContent>
-              <CardFooter>
-                <Link
-                  href="/professional-leadership"
-                  className="inline-flex items-center text-sm font-medium text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
-                >
-                  Learn More
-                  <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </CardFooter>
-            </Card>
-
-            <Card className="group overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
-              <CardHeader className="pb-2">
-                <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300">
-                  <MessageSquare className="h-6 w-6" />
-                </div>
-                <CardTitle>Blog</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  Insights, reflections, and inspirational content on counseling
-                  and mental health topics.
-                </CardDescription>
-              </CardContent>
-              <CardFooter>
-                <Link
-                  href="/blog"
-                  className="inline-flex items-center text-sm font-medium text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
-                >
-                  Read Blog
-                  <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </CardFooter>
-            </Card>
-
-            <Card className="group overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
-              <CardHeader className="pb-2">
-                <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300">
-                  <FileText className="h-6 w-6" />
-                </div>
-                <CardTitle>CV</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  Comprehensive overview of my academic background, professional
-                  experience, and achievements.
-                </CardDescription>
-              </CardContent>
-              <CardFooter>
-                <Link
-                  href="/contact/request-cv"
-                  className="inline-flex items-center text-sm font-medium text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
-                >
-                  Request CV
-                  <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </CardFooter>
-            </Card>
-          </div>
-        </div>
-      </section>
+      <AwardsAndHonorsSection />
 
       {/* Latest Blog Posts */}
       <section className="bg-muted py-16 md:py-24">
@@ -435,12 +191,12 @@ export default function Home() {
           <div className="rounded-2xl bg-red-600 p-8 text-white shadow-lg md:p-12">
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl">
-                Let's Connect
+                Connect with Asmau
               </h2>
               <p className="mb-8 text-lg text-red-100">
-                Whether you're interested in my research, looking for a speaker,
-                or want to discuss potential collaborations, I'd love to hear
-                from you.
+                For collaborations, inquiries, and more information on her work
+                in counseling, research, and community service, please reach
+                out.
               </p>
               <Button asChild size="lg" variant="secondary">
                 <Link href="/contact">Get in Touch</Link>
