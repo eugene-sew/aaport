@@ -31,17 +31,18 @@ export default function AboutPage() {
                 About Me
               </h1>
               <p className="mb-4 text-lg text-muted-foreground">
-                I am Asmau Ayub, a Licensed Counseling Psychologist with over a
-                decade of clinical experience. Currently, I am a third-year PhD
-                candidate in Counselor Education & Supervision at Michigan State
-                University.
+                I am Asmau Ayub, a dedicated and passionate doctoral candidate
+                in the Counselor Education and Supervision program at Michigan
+                State University. With a specialization in Rehabilitation
+                Counseling, I combine my extensive background in mental health,
+                education, and community service to foster positive change.
               </p>
               <p className="mb-6 text-muted-foreground">
-                My research interests focus on multicultural counseling
-                competence, social justice advocacy in counseling, and effective
-                supervision methodologies. I am passionate about training the
-                next generation of counselors to provide culturally responsive
-                and ethical mental health services.
+                My research interests focus on understanding and addressing
+                pressing issues in mental health and rehabilitation. As a
+                licensed counseling psychologist in Ghana, I have dedicated over
+                eleven years to advancing mental health support, specializing in
+                rehabilitation and school counseling.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button asChild className="bg-red-600 hover:bg-red-700">
@@ -53,12 +54,12 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="order-1 flex justify-center md:order-2">
-              <div className="relative h-72 w-72 border-4 border-red-600 shadow-xl md:h-[600px] md:w-[600px]">
+              <div className="relative h-72 w-72 md:h-[600px] md:w-[550px]">
                 <Image
                   src="/main.png"
                   alt="Asmau Ayub"
                   fill
-                  className="object-cover"
+                  className="object-contain"
                   priority
                 />
               </div>
@@ -67,205 +68,44 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Education & Credentials */}
+
+
+    
+
+      {/* Community Service */}
       <section className="bg-muted py-16 md:py-24">
         <div className="container">
           <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
-            Education & Credentials
+            Community Service
           </h2>
           <div className="mx-auto grid max-w-4xl gap-8">
             <Card className="overflow-hidden rounded-2xl">
-              <CardHeader className="pb-2">
-                <div className="mb-2 flex items-center gap-2">
-                  <GraduationCap className="h-5 w-5 text-red-600" />
-                  <span className="text-sm font-medium text-red-600">
-                    Current
-                  </span>
-                </div>
-                <CardTitle>PhD in Counselor Education & Supervision</CardTitle>
-                <CardDescription>
-                  Michigan State University, Expected 2024
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Dissertation focus: "Multicultural Supervision Models and
-                  Their Impact on Counselor Development"
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden rounded-2xl">
-              <CardHeader className="pb-2">
-                <div className="mb-2 flex items-center gap-2">
-                  <GraduationCap className="h-5 w-5 text-red-600" />
-                  <span className="text-sm font-medium text-red-600">2015</span>
-                </div>
-                <CardTitle>Master of Arts in Counseling Psychology</CardTitle>
-                <CardDescription>
-                  University of Michigan, Ann Arbor
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Specialization in multicultural counseling and trauma-informed
-                  care
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden rounded-2xl">
-              <CardHeader className="pb-2">
-                <div className="mb-2 flex items-center gap-2">
-                  <GraduationCap className="h-5 w-5 text-red-600" />
-                  <span className="text-sm font-medium text-red-600">2012</span>
-                </div>
-                <CardTitle>Bachelor of Science in Psychology</CardTitle>
-                <CardDescription>
-                  University of Illinois, Urbana-Champaign
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Minor in Sociology, Graduated with Honors
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden rounded-2xl">
-              <CardHeader className="pb-2">
-                <div className="mb-2 flex items-center gap-2">
-                  <Award className="h-5 w-5 text-red-600" />
-                  <span className="text-sm font-medium text-red-600">
-                    Licensure
-                  </span>
-                </div>
-                <CardTitle>Licensed Professional Counselor (LPC)</CardTitle>
-                <CardDescription>
-                  State of Michigan, License #12345
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Certified in EMDR Therapy and Trauma-Focused Cognitive
-                  Behavioral Therapy (TF-CBT)
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Professional Philosophy */}
-      <section className="py-16 md:py-24">
-        <div className="container">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="mb-6 text-3xl font-bold tracking-tight md:text-4xl">
-              My Professional Philosophy
-            </h2>
-            <div className="mb-8 text-lg text-muted-foreground">
-              <p className="mb-4">
-                I believe in a holistic, culturally responsive approach to
-                counseling and education that honors the unique experiences and
-                backgrounds of each individual. My work is guided by the
-                principles of:
-              </p>
-              <div className="grid gap-6 md:grid-cols-2">
-                <Card className="overflow-hidden rounded-2xl text-left">
-                  <CardHeader className="pb-2">
-                    <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300 w-fit">
-                      <Heart className="h-5 w-5" />
-                    </div>
-                    <CardTitle>Empathy & Compassion</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-base">
-                      Creating a safe, supportive environment where clients and
-                      students feel truly seen and heard.
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-
-                <Card className="overflow-hidden rounded-2xl text-left">
-                  <CardHeader className="pb-2">
-                    <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300 w-fit">
-                      <BookOpen className="h-5 w-5" />
-                    </div>
-                    <CardTitle>Evidence-Based Practice</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-base">
-                      Integrating the latest research with clinical expertise
-                      and client values for optimal outcomes.
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-            <Button asChild className="bg-red-600 hover:bg-red-700">
-              <Link href="/about/counseling">
-                Learn About My Counseling Approach
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Professional Affiliations */}
-      <section className="bg-muted py-16 md:py-24">
-        <div className="container">
-          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
-            Professional Affiliations
-          </h2>
-          <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
-            <Card className="overflow-hidden rounded-2xl">
               <CardHeader>
-                <CardTitle>American Counseling Association (ACA)</CardTitle>
+                <CardTitle>Rayuwa Foundation</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Active member since 2013, serving on the Multicultural
-                  Counseling Committee
+                  As the Founder and Executive Director of Rayuwa Foundation, I
+                  lead programs targeting mental health and educational support
+                  for marginalized groups in Ghana. The foundation organizes
+                  outreach programs that promote mental health education and
+                  empowerment, reaching vulnerable populations, including women
+                  and children affected by domestic violence.
                 </p>
               </CardContent>
             </Card>
 
             <Card className="overflow-hidden rounded-2xl">
               <CardHeader>
-                <CardTitle>
-                  Association for Counselor Education and Supervision (ACES)
-                </CardTitle>
+                <CardTitle>Academic Leadership</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Member since 2018, contributing to research initiatives
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden rounded-2xl">
-              <CardHeader>
-                <CardTitle>Michigan Counseling Association (MCA)</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Board member since 2020, advocating for counseling profession
-                  advancement
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden rounded-2xl">
-              <CardHeader>
-                <CardTitle>
-                  International Association for Counseling (IAC)
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Member since 2016, participating in global counseling
-                  initiatives
+                  I actively contribute to my local and global communities
+                  through various service initiatives as a student leader in
+                  various campus RSOs. My leadership extends to supervision
+                  roles, where I foster professional development among aspiring
+                  counselors through mentoring and constructive feedback.
                 </p>
               </CardContent>
             </Card>

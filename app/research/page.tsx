@@ -1,9 +1,90 @@
-import Link from "next/link"
-import Image from "next/image"
-import { ArrowRight, FileText, BookOpen, Users } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import BlobBackground from "@/components/blob-background"
+import Link from "next/link";
+import Image from "next/image";
+import { ArrowRight, FileText, BookOpen, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import BlobBackground from "@/components/blob-background";
+
+// Data-driven content
+const researchAreas = [
+  {
+    title: "Multicultural Supervision",
+    description:
+      "Exploring how cultural factors influence the supervisory relationship and developing models for culturally responsive supervision in counselor training.",
+    imgText: "Multicultural Supervision",
+  },
+  {
+    title: "Social Justice Advocacy",
+    description:
+      "Investigating how counselors can effectively advocate for systemic change and address inequities in mental health care access and delivery.",
+    imgText: "Social Justice Advocacy",
+  },
+  {
+    title: "Counselor Development",
+    description:
+      "Studying the factors that contribute to effective counselor training and professional identity development across the career lifespan.",
+    imgText: "Counselor Development",
+  },
+];
+
+const publications = [
+  {
+    id: "book-chapters",
+    label: "Book Chapters",
+    icon: FileText,
+    entries: [
+      "Ayub, A., Wiafe, E. (In-press). Journeys of Becoming Critical Scholars: Volume 1 & 2.",
+      "Shultz, J., Ayub, A. (2024). Designing Supervision Intervention to Strengthen Supervisee Competency. In C.B & E.B. Shultz (Eds.) Clinical Supervision: A Handbook for Counselors.",
+    ],
+    images: [], // provision for images
+    link: "/research/publications/book-chapters",
+  },
+  {
+    id: "articles",
+    label: "Articles",
+    icon: BookOpen,
+    entries: [
+      "Ayub, A., Lee, G., Easley, T. (under review). Perceiving Acceptance Through the Lens of Autistic College Students",
+      "Ayub, A., Umucu, E., & Lee, G. (in preparation). Veteran Employment Needs: A Scoping Review",
+    ],
+    images: [],
+    link: "/research/publications/articles",
+  },
+  {
+    id: "books",
+    label: "Books",
+    icon: Users,
+    entries: [
+      "Ayub, A., Danquah, S.A., Bruce, D. (2013). Foster and Biological Parenting: Impact on Personality and Cognitive Performance.",
+    ],
+    images: [],
+    link: "/research/publications/books",
+  },
+];
+
+const conferencePresentations = [
+  {
+    title:
+      "Perceiving Acceptance Through the Lens of Autistic College Students",
+    context:
+      "Council for Exceptional Children: Division on Autism and Developmental Disabilities annual International conference, January 2025",
+    image: "/autism.jpg",
+  },
+  {
+    title:
+      "The Art of Supervision: Reflecting on Supervisee Qualities in Clinical Supervision",
+    context: "November 2023",
+    image: "/super.png",
+  },
+];
 
 export default function ResearchPage() {
   return (
@@ -11,243 +92,118 @@ export default function ResearchPage() {
       <BlobBackground />
 
       {/* Hero Section */}
-      <section className="py-16 md:py-24">
-        <div className="container">
+      <section className="relative py-16 md:py-24">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/research.jpg"
+            alt="Research background"
+            fill
+            className="object-cover opacity-20"
+            priority
+          />
+        </div>
+        <div className="container relative z-10">
           <div className="mx-auto max-w-3xl text-center">
-            <h1 className="mb-6 text-4xl font-bold tracking-tight md:text-5xl">Research</h1>
+            <h1 className="mb-6 text-4xl font-bold tracking-tight md:text-5xl">
+              Research
+            </h1>
             <p className="mb-8 text-lg text-muted-foreground">
-              My research focuses on counselor education, supervision methodologies, multicultural competence, and
-              social justice advocacy in counseling psychology. I am committed to advancing the field through rigorous
-              inquiry and practical applications.
+              Asmau's research contributions reflect her commitment to
+              understanding and addressing pressing issues in mental health and
+              rehabilitation
             </p>
           </div>
         </div>
       </section>
 
-      {/* Research Areas */}
-      <section className="py-12 md:py-16">
-        <div className="container">
-          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">Research Areas</h2>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <Card className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
-              <div className="aspect-video overflow-hidden">
-                <Image
-                  src="/placeholder.svg?height=250&width=500&text=Multicultural%20Supervision"
-                  alt="Multicultural Supervision"
-                  width={500}
-                  height={250}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <CardHeader>
-                <CardTitle>Multicultural Supervision</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  Exploring how cultural factors influence the supervisory relationship and developing models for
-                  culturally responsive supervision in counselor training.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
-              <div className="aspect-video overflow-hidden">
-                <Image
-                  src="/placeholder.svg?height=250&width=500&text=Social%20Justice%20Advocacy"
-                  alt="Social Justice Advocacy"
-                  width={500}
-                  height={250}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <CardHeader>
-                <CardTitle>Social Justice Advocacy</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  Investigating how counselors can effectively advocate for systemic change and address inequities in
-                  mental health care access and delivery.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
-              <div className="aspect-video overflow-hidden">
-                <Image
-                  src="/placeholder.svg?height=250&width=500&text=Counselor%20Development"
-                  alt="Counselor Development"
-                  width={500}
-                  height={250}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <CardHeader>
-                <CardTitle>Counselor Development</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  Studying the factors that contribute to effective counselor training and professional identity
-                  development across the career lifespan.
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Research Categories */}
+      {/* Publications with Tabs */}
       <section className="bg-muted py-16 md:py-24">
         <div className="container">
-          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">Research Output</h2>
-          <div className="grid gap-8 md:grid-cols-3">
-            <Card className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
-              <CardHeader className="pb-2">
-                <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300 w-fit">
-                  <FileText className="h-6 w-6" />
+          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
+            Publications
+          </h2>
+          <Tabs defaultValue={publications[0].id} className="w-full">
+            <TabsList className="justify-center mb-8">
+              {publications.map((pub) => (
+                <TabsTrigger key={pub.id} value={pub.id} className="capitalize">
+                  {pub.label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+            {publications.map((pub) => (
+              <TabsContent key={pub.id} value={pub.id} className="space-y-4">
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  {pub.images.length > 0 &&
+                    pub.images.map((src, idx) => (
+                      <Image
+                        key={idx}
+                        src={src}
+                        alt={`${pub.label} image ${idx + 1}`}
+                        width={200}
+                        height={200}
+                        className="rounded-lg"
+                      />
+                    ))}
                 </div>
-                <CardTitle>Publications</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  Peer-reviewed journal articles on counseling psychology, supervision, and multicultural competence.
-                </CardDescription>
-              </CardContent>
-              <CardFooter>
-                <Link
-                  href="/research/publications"
-                  className="inline-flex items-center text-sm font-medium text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
-                >
-                  View Publications
-                  <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </CardFooter>
-            </Card>
-
-            <Card className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
-              <CardHeader className="pb-2">
-                <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300 w-fit">
-                  <BookOpen className="h-6 w-6" />
+                <div className="space-y-2">
+                  {pub.entries.map((entry, idx) => (
+                    <Card key={idx} className="overflow-hidden rounded-2xl">
+                      <CardHeader>
+                        <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300 w-fit">
+                          <pub.icon className="h-6 w-6" />
+                        </div>
+                        <CardTitle className="text-lg">{entry}</CardTitle>
+                      </CardHeader>
+                      <CardFooter>
+                        <Link
+                          href={pub.link}
+                          className="inline-flex items-center text-sm font-medium text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
+                        >
+                          View Detail
+                          <ArrowRight className="ml-1 h-4 w-4" />
+                        </Link>
+                      </CardFooter>
+                    </Card>
+                  ))}
                 </div>
-                <CardTitle>Book Chapters</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  Contributions to edited volumes on counseling theory, practice, and education.
-                </CardDescription>
-              </CardContent>
-              <CardFooter>
-                <Link
-                  href="/research/book-chapters"
-                  className="inline-flex items-center text-sm font-medium text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
-                >
-                  View Book Chapters
-                  <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </CardFooter>
-            </Card>
-
-            <Card className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
-              <CardHeader className="pb-2">
-                <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300 w-fit">
-                  <Users className="h-6 w-6" />
-                </div>
-                <CardTitle>Conference Presentations</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  Research presented at national and international conferences in counseling and psychology.
-                </CardDescription>
-              </CardContent>
-              <CardFooter>
-                <Link
-                  href="/research/conference-presentations"
-                  className="inline-flex items-center text-sm font-medium text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
-                >
-                  View Presentations
-                  <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </CardFooter>
-            </Card>
-          </div>
+              </TabsContent>
+            ))}
+          </Tabs>
         </div>
       </section>
 
-      {/* Current Projects */}
+      {/* Conference Presentations */}
       <section className="py-16 md:py-24">
         <div className="container">
-          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">Current Research Projects</h2>
-          <div className="mx-auto grid max-w-4xl gap-8">
-            <Card className="overflow-hidden rounded-2xl">
-              <CardHeader>
-                <CardTitle>Multicultural Supervision Models and Their Impact on Counselor Development</CardTitle>
-                <CardDescription>Dissertation Research, 2022-Present</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="mb-4 text-muted-foreground">
-                  This mixed-methods study examines how different approaches to multicultural supervision influence the
-                  development of cultural competence in counselors-in-training. The research includes both quantitative
-                  measures of counselor development and qualitative interviews to capture the lived experiences of
-                  supervisees.
-                </p>
-                <div className="rounded-lg bg-muted p-4">
-                  <h4 className="mb-2 font-medium">Key Research Questions:</h4>
-                  <ul className="ml-6 list-disc space-y-1 text-muted-foreground">
-                    <li>
-                      How do supervisees experience different approaches to addressing cultural factors in supervision?
-                    </li>
-                    <li>
-                      What supervision interventions most effectively promote multicultural counseling competence?
-                    </li>
-                    <li>
-                      How do supervisors' own cultural identities and experiences influence their supervision practices?
-                    </li>
-                  </ul>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden rounded-2xl">
-              <CardHeader>
-                <CardTitle>
-                  Integrating Social Justice Advocacy Training in Counselor Education: A Program Evaluation
-                </CardTitle>
-                <CardDescription>Collaborative Research, 2021-Present</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="mb-4 text-muted-foreground">
-                  This project evaluates the implementation and outcomes of a social justice advocacy training component
-                  within a counselor education program. The study tracks changes in students' advocacy competencies,
-                  attitudes, and behaviors over time.
-                </p>
-                <div className="rounded-lg bg-muted p-4">
-                  <h4 className="mb-2 font-medium">Research Team:</h4>
-                  <p className="text-muted-foreground">
-                    Collaboration with Dr. James Smith (Michigan State University) and Dr. Karen Johnson (University of
-                    Michigan)
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden rounded-2xl">
-              <CardHeader>
-                <CardTitle>Trauma-Informed Supervision: Best Practices and Training Needs</CardTitle>
-                <CardDescription>Grant-Funded Research, 2022-Present</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="mb-4 text-muted-foreground">
-                  This study identifies best practices in trauma-informed supervision and assesses the training needs of
-                  supervisors working with counselors who provide trauma treatment. The research includes a national
-                  survey of supervisors and in-depth case studies.
-                </p>
-                <div className="rounded-lg bg-muted p-4">
-                  <h4 className="mb-2 font-medium">Funding:</h4>
-                  <p className="text-muted-foreground">
-                    Supported by a grant from the Association for Counselor Education and Supervision (ACES)
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
+            Conference Presentations
+          </h2>
+          <div className="mx-auto max-w-6xl">
+            <div className="grid gap-8 md:grid-cols-2">
+              {conferencePresentations.map((conf, idx) => (
+                <Card
+                  key={idx}
+                  className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-lg"
+                >
+                  <div className="relative h-64">
+                    <Image
+                      src={conf.image}
+                      alt={`${conf.title} conference banner`}
+                      fill
+                      className="object-cover transition-transform duration-300 hover:scale-105"
+                    />
+                  </div>
+                  <CardHeader className="space-y-4">
+                    <CardTitle className="text-xl leading-tight">
+                      {conf.title}
+                    </CardTitle>
+                    <CardDescription className="text-sm font-medium text-muted-foreground">
+                      {conf.context}
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -256,17 +212,24 @@ export default function ResearchPage() {
       <section className="bg-muted py-16">
         <div className="container">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="mb-6 text-3xl font-bold tracking-tight md:text-4xl">Research Collaboration</h2>
+            <h2 className="mb-6 text-3xl font-bold tracking-tight md:text-4xl">
+              Research Collaboration
+            </h2>
             <p className="mb-8 text-lg text-muted-foreground">
-              I am always open to research collaborations with fellow scholars, practitioners, and students who share an
-              interest in counselor education, supervision, and social justice advocacy.
+              I am always open to research collaborations with fellow scholars,
+              practitioners, and students who share an interest in counselor
+              education, supervision, and social justice advocacy.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button asChild className="bg-red-600 hover:bg-red-700">
                 <Link href="/contact">Contact Me</Link>
               </Button>
               <Button asChild variant="outline">
-                <Link href="https://scholar.google.com" target="_blank" rel="noopener noreferrer">
+                <Link
+                  href="https://scholar.google.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Google Scholar Profile
                 </Link>
               </Button>
@@ -275,5 +238,5 @@ export default function ResearchPage() {
         </div>
       </section>
     </div>
-  )
+  );
 }
