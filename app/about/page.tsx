@@ -6,6 +6,9 @@ import {
   BookOpen,
   GraduationCap,
   Heart,
+  Users,
+  School,
+  Briefcase,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -28,21 +31,22 @@ export default function AboutPage() {
           <div className="grid gap-12 md:grid-cols-2 md:items-center">
             <div className="order-2 md:order-1">
               <h1 className="mb-6 text-4xl font-bold tracking-tight md:text-5xl">
-                About Me
+                About Asmau Ayub
               </h1>
               <p className="mb-4 text-lg text-muted-foreground">
-                I am Asmau Ayub, a dedicated and passionate doctoral candidate
-                in the Counselor Education and Supervision program at Michigan
+                Asmau Ayub is a dedicated and passionate doctoral candidate in
+                the Counselor Education and Supervision program at Michigan
                 State University. With a specialization in Rehabilitation
-                Counseling, I combine my extensive background in mental health,
-                education, and community service to foster positive change.
+                Counseling, she combines her extensive background in mental
+                health, education, and community service to foster positive
+                change.
               </p>
               <p className="mb-6 text-muted-foreground">
-                My research interests focus on understanding and addressing
+                Her research interests focus on understanding and addressing
                 pressing issues in mental health and rehabilitation. As a
-                licensed counseling psychologist in Ghana, I have dedicated over
-                eleven years to advancing mental health support, specializing in
-                rehabilitation and school counseling.
+                licensed counseling psychologist in Ghana, Asmau has dedicated
+                over eleven years to advancing mental health support,
+                specializing in rehabilitation and school counseling.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button asChild className="bg-red-600 hover:bg-red-700">
@@ -54,9 +58,9 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="order-1 flex justify-center md:order-2">
-              <div className="relative h-72 w-72 md:h-[600px] md:w-[550px]">
+              <div className="relative h-72 w-72 md:h-96 md:w-96">
                 <Image
-                  src="/main.png"
+                  src="/img.png"
                   alt="Asmau Ayub"
                   fill
                   className="object-contain"
@@ -68,47 +72,159 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Counseling Experience */}
+      <section className="py-16 md:py-24 bg-slate-50" id="counseling">
+        <div className="container">
+          <h2 className="mb-8 text-center text-3xl font-bold tracking-tight md:text-4xl">
+            Counseling Experience
+          </h2>
+          <div className="grid gap-8 md:grid-cols-3">
+            <Card className="rounded-xl shadow-md">
+              <CardHeader className="pb-3">
+                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-red-100">
+                  <Briefcase className="h-6 w-6 text-red-600" />
+                </div>
+                <CardTitle>Mental Health Practice</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  As a licensed counseling psychologist in Ghana, Asmau has a
+                  proven track record of assessing and treating mental health
+                  issues, providing individual, group, and family therapy to
+                  diverse populations, including marginalized communities.
+                </p>
+              </CardContent>
+            </Card>
 
+            <Card className="rounded-xl shadow-md">
+              <CardHeader className="pb-3">
+                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-red-100">
+                  <School className="h-6 w-6 text-red-600" />
+                </div>
+                <CardTitle>School Counseling</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  With experience in various educational settings, Asmau has
+                  expertly guided students through academic, career, and
+                  personal challenges, ensuring they receive holistic support
+                  while promoting growth and resilience.
+                </p>
+              </CardContent>
+            </Card>
 
-    
+            <Card className="rounded-xl shadow-md">
+              <CardHeader className="pb-3">
+                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-red-100">
+                  <Users className="h-6 w-6 text-red-600" />
+                </div>
+                <CardTitle>Community Engagement</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Her foundational work through the Rayuwa Foundation in Ghana
+                  highlights her commitment to psychosocial and educational
+                  support, empowering underserved populations and advocating for
+                  improved mental health services among victims of domestic
+                  abuse and violence.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
 
       {/* Community Service */}
       <section className="bg-muted py-16 md:py-24">
         <div className="container">
-          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mb-8 text-center text-3xl font-bold tracking-tight md:text-4xl">
             Community Service
           </h2>
-          <div className="mx-auto grid max-w-4xl gap-8">
-            <Card className="overflow-hidden rounded-2xl">
-              <CardHeader>
-                <CardTitle>Rayuwa Foundation</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  As the Founder and Executive Director of Rayuwa Foundation, I
-                  lead programs targeting mental health and educational support
-                  for marginalized groups in Ghana. The foundation organizes
-                  outreach programs that promote mental health education and
-                  empowerment, reaching vulnerable populations, including women
-                  and children affected by domestic violence.
-                </p>
-              </CardContent>
+          <div className="mx-auto grid max-w-5xl gap-12">
+            <Card className="overflow-hidden rounded-xl shadow-md">
+              <div className="grid md:grid-cols-2">
+                <div className="relative h-64 md:h-full">
+                  <Image
+                    src="/ru.jpg"
+                    alt="Rayuwa Foundation community work"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <CardHeader>
+                    <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-red-100">
+                      <Heart className="h-6 w-6 text-red-600" />
+                    </div>
+                    <CardTitle>Rayuwa Foundation</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">
+                      As the Founder and Executive Director of Rayuwa
+                      Foundation, Asmau leads programs targeting mental health
+                      and educational support for marginalized groups in Ghana.
+                      The foundation organizes outreach programs that promote
+                      mental health education and empowerment, reaching
+                      vulnerable populations, including women and children
+                      affected by domestic violence.
+                    </p>
+                  </CardContent>
+                </div>
+              </div>
             </Card>
 
-            <Card className="overflow-hidden rounded-2xl">
-              <CardHeader>
-                <CardTitle>Academic Leadership</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  I actively contribute to my local and global communities
-                  through various service initiatives as a student leader in
-                  various campus RSOs. My leadership extends to supervision
-                  roles, where I foster professional development among aspiring
-                  counselors through mentoring and constructive feedback.
-                </p>
-              </CardContent>
+            <Card className="overflow-hidden rounded-xl shadow-md">
+              <div className="grid md:grid-cols-2">
+                <div className="order-1 md:order-2 relative h-64 md:h-full">
+                  <Image
+                    src="/mentorship pic.jpg"
+                    alt="Academic leadership activities"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="order-2 md:order-1">
+                  <CardHeader>
+                    <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-red-100">
+                      <GraduationCap className="h-6 w-6 text-red-600" />
+                    </div>
+                    <CardTitle>Academic Leadership</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">
+                      Asmau actively contributes to local and global communities
+                      through various service initiatives as a student leader in
+                      various campus RSOs. Her leadership extends to supervision
+                      roles, where she fosters professional development among
+                      aspiring counselors through mentoring and constructive
+                      feedback.
+                    </p>
+                  </CardContent>
+                </div>
+              </div>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Academic Credentials CTA */}
+      <section className="py-16 md:py-20">
+        <div className="container">
+          <div className="mx-auto max-w-3xl rounded-2xl bg-red-50 p-8 text-center">
+            <h3 className="mb-4 text-2xl font-bold text-gray-900">
+              Academic Journey
+            </h3>
+            <p className="mb-6 text-muted-foreground">
+              Explore Asmau's research interests, publications, and ongoing
+              projects in rehabilitation counseling, mental health advocacy, and
+              educational psychology.
+            </p>
+            <Button asChild className="bg-red-600 hover:bg-red-700">
+              <Link href="/publications" className="inline-flex items-center">
+                View Academic Work
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>

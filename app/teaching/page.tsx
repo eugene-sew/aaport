@@ -1,119 +1,142 @@
-import Image from "next/image"
-import Link from "next/link"
-import { ArrowRight, BookOpen, Users, GraduationCap, Award } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import BlobBackground from "@/components/blob-background"
+import Image from "next/image";
+import Link from "next/link";
+import {
+  ArrowRight,
+  BookOpen,
+  Users,
+  GraduationCap,
+  Award,
+  BookMarked,
+  FlaskConical,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import BlobBackground from "@/components/blob-background";
 
-// This would be fetched from Supabase in a real implementation
+// Courses taught based on the provided data
 const courses = [
   {
     id: 1,
-    title: "Counseling Theories and Techniques",
-    code: "CEP 864",
+    title: "Substance Abuse Counseling",
+    code: "CEP 873",
     level: "Graduate",
     institution: "Michigan State University",
     description:
-      "A comprehensive exploration of major counseling theories and their application in practice. Students learn to develop their own theoretical orientation and apply evidence-based techniques.",
+      "A comprehensive course on substance abuse counseling theory and practice. Students learn assessment, intervention, and treatment approaches for substance use disorders.",
     topics: [
-      "Person-Centered Therapy",
-      "Cognitive-Behavioral Approaches",
-      "Psychodynamic Theories",
-      "Existential and Humanistic Approaches",
-      "Multicultural Counseling Theories",
+      "Addiction Models and Theories",
+      "Assessment and Diagnosis",
+      "Evidence-based Interventions",
+      "Co-occurring Disorders",
+      "Recovery and Relapse Prevention",
     ],
   },
   {
     id: 2,
-    title: "Multicultural Counseling",
-    code: "CEP 885",
+    title: "Rehabilitation Counseling Fundamentals",
+    code: "CEP 861",
     level: "Graduate",
     institution: "Michigan State University",
     description:
-      "Examination of cultural factors that influence the counseling relationship and process. Focus on developing cultural competence and applying culturally responsive interventions.",
+      "An introduction to the principles and practices of rehabilitation counseling, focusing on helping individuals with disabilities achieve their personal and vocational goals.",
     topics: [
-      "Cultural Identity Development",
-      "Privilege and Oppression",
-      "Culturally Responsive Counseling Skills",
-      "Social Justice Advocacy",
-      "Working with Specific Populations",
+      "Disability Models and Perspectives",
+      "Vocational Assessment",
+      "Case Management",
+      "Psychosocial Adjustment",
+      "Accommodation and Accessibility",
     ],
   },
   {
     id: 3,
-    title: "Clinical Supervision in Counseling",
-    code: "CEP 968",
-    level: "Doctoral",
-    institution: "Michigan State University",
-    description:
-      "Theory and practice of clinical supervision in counseling. Students develop supervision skills through didactic instruction, role-playing, and supervised experience.",
-    topics: [
-      "Supervision Models and Theories",
-      "Supervisory Relationship",
-      "Ethical and Legal Issues",
-      "Multicultural Supervision",
-      "Evaluation and Feedback",
-    ],
-  },
-  {
-    id: 4,
-    title: "Practicum in Counseling",
-    code: "CEP 893",
+    title: "International Teaching Assistant Program",
+    code: "Summer Program",
     level: "Graduate",
     institution: "Michigan State University",
     description:
-      "Supervised counseling experience with clients. Students apply counseling theories and techniques under close supervision.",
+      "A supportive program designed to help international teaching assistants acclimate to U.S. academic expectations and develop effective teaching strategies.",
     topics: [
-      "Intake Assessment",
-      "Treatment Planning",
-      "Counseling Interventions",
-      "Case Conceptualization",
-      "Professional Development",
+      "Cross-cultural Communication",
+      "Classroom Management",
+      "Student Engagement Techniques",
+      "Assessment Methods",
+      "Academic Policies and Procedures",
     ],
   },
-]
+];
 
 const teachingPhilosophy = [
   {
-    title: "Student-Centered Learning",
+    title: "Student Engagement",
     description:
-      "I believe in creating a learning environment that respects students' diverse backgrounds, learning styles, and professional goals. My teaching approach emphasizes active engagement, critical thinking, and practical application.",
+      "Asmau creates dynamic learning environments that actively involve students in the learning process through discussions, group activities, and interactive exercises that promote deep understanding of counseling concepts.",
     icon: <Users className="h-6 w-6" />,
   },
   {
-    title: "Integration of Theory and Practice",
+    title: "Critical Thinking",
     description:
-      "I strive to bridge the gap between theoretical knowledge and practical application by incorporating case studies, role-plays, and experiential activities that allow students to apply concepts in realistic scenarios.",
+      "Students are encouraged to analyze, evaluate, and synthesize information from multiple perspectives, developing the analytical skills necessary for effective clinical decision-making in complex counseling situations.",
     icon: <BookOpen className="h-6 w-6" />,
   },
   {
-    title: "Multicultural Competence",
+    title: "Practical Application",
     description:
-      "I infuse multicultural awareness throughout my teaching, helping students develop the knowledge, skills, and attitudes needed to work effectively with diverse clients. This includes critical examination of power, privilege, and social justice issues.",
+      "Asmau emphasizes the practical application of theoretical knowledge through case studies, role-plays, and supervised field experiences that prepare students for real-world counseling scenarios and challenges.",
     icon: <Award className="h-6 w-6" />,
   },
   {
-    title: "Reflective Practice",
+    title: "Real-world Integration",
     description:
-      "I encourage students to develop as reflective practitioners who continuously examine their assumptions, biases, and effectiveness. Regular self-assessment and peer feedback are integral components of my courses.",
+      "Teaching incorporates current research and evidence-based practices in rehabilitation counseling, ensuring students develop skills that are directly applicable to contemporary clinical settings.",
     icon: <GraduationCap className="h-6 w-6" />,
   },
-]
+];
 
 export default function TeachingPage() {
   return (
     <div className="relative">
       <BlobBackground />
 
-      {/* Hero Section */}
+      {/* Hero Section with Image */}
       <section className="py-16 md:py-24">
         <div className="container">
-          <div className="mx-auto max-w-3xl text-center">
-            <h1 className="mb-6 text-4xl font-bold tracking-tight md:text-5xl">Teaching</h1>
-            <p className="mb-8 text-lg text-muted-foreground">
-              As an educator in counselor education and supervision, I am committed to preparing the next generation of
-              counselors to provide ethical, culturally responsive, and effective services to diverse clients.
-            </p>
+          <div className="grid gap-12 md:grid-cols-2 md:items-center">
+            <div className="order-2 md:order-1">
+              <h1 className="mb-6 text-4xl font-bold tracking-tight md:text-5xl">
+                Teaching
+              </h1>
+              <p className="mb-4 text-lg text-muted-foreground">
+                As a dedicated instructor at Michigan State University, Asmau is
+                passionate about imparting knowledge in the field of
+                Rehabilitation Counseling.
+              </p>
+              <p className="mb-6 text-muted-foreground">
+                Her teaching philosophy emphasizes student engagement, critical
+                thinking, and practical application of counseling theories to
+                real-world scenarios.
+              </p>
+              <Button asChild className="bg-red-600 hover:bg-red-700">
+                <Link href="/contact">Contact for Collaborations</Link>
+              </Button>
+            </div>
+            <div className="order-1 flex justify-center md:order-2">
+              <div className="relative h-72 w-full rounded-2xl overflow-hidden md:h-96">
+                <Image
+                  src="/teach_full.png"
+                  alt="Asmau teaching"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -121,10 +144,15 @@ export default function TeachingPage() {
       {/* Teaching Philosophy */}
       <section className="py-12 md:py-16">
         <div className="container">
-          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">Teaching Philosophy</h2>
+          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
+            Teaching Philosophy
+          </h2>
           <div className="grid gap-8 md:grid-cols-2">
             {teachingPhilosophy.map((item, index) => (
-              <Card key={index} className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
+              <Card
+                key={index}
+                className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md"
+              >
                 <CardHeader className="pb-2">
                   <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300 w-fit">
                     {item.icon}
@@ -132,7 +160,9 @@ export default function TeachingPage() {
                   <CardTitle>{item.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="text-base">{item.description}</CardDescription>
+                  <CardDescription className="text-base">
+                    {item.description}
+                  </CardDescription>
                 </CardContent>
               </Card>
             ))}
@@ -140,13 +170,100 @@ export default function TeachingPage() {
         </div>
       </section>
 
-      {/* Courses */}
+      {/* Teaching Experience */}
       <section className="bg-muted py-16 md:py-24">
         <div className="container">
-          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">Courses Taught</h2>
-          <div className="grid gap-8 md:grid-cols-2">
+          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
+            Teaching Experience
+          </h2>
+          <div className="grid gap-8 md:grid-cols-3">
+            <Card className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
+              <div className="relative h-48 w-full">
+                <Image
+                  src="/suba.jpg"
+                  alt="Substance Abuse Counseling"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <CardHeader className="pb-2">
+                <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300 w-fit">
+                  <BookMarked className="h-6 w-6" />
+                </div>
+                <CardTitle>Independent Instruction</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Asmau independently develops and teaches multiple sections of
+                  Substance Abuse courses, integrating comprehensive syllabi and
+                  engaging teaching methodologies.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
+              <div className="relative h-48 w-full">
+                <Image
+                  src="/grad.jpg"
+                  alt="Graduate Level Teaching"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <CardHeader className="pb-2">
+                <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300 w-fit">
+                  <GraduationCap className="h-6 w-6" />
+                </div>
+                <CardTitle>Graduate-Level Instruction</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Asmau has experience as a teaching assistant at the master's
+                  class level and undergraduate levels, providing instructional
+                  support and mentorship to developing counselors.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
+              <div className="relative h-48 w-full">
+                <Image
+                  src="/bg.png"
+                  alt="International Teaching"
+                  fill
+                  className="object-cover object-top"
+                />
+              </div>
+              <CardHeader className="pb-2">
+                <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300 w-fit">
+                  <FlaskConical className="h-6 w-6" />
+                </div>
+                <CardTitle>International Programs</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  In summer programs, Asmau supports international teaching
+                  assistants in acclimating to academic expectations, enhancing
+                  cross-cultural teaching competencies.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Courses */}
+      <section className="py-16 md:py-24">
+        <div className="container">
+          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
+            Courses Taught
+          </h2>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {courses.map((course) => (
-              <Card key={course.id} className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
+              <Card
+                key={course.id}
+                className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md"
+              >
                 <CardHeader>
                   <div className="mb-2 flex items-center gap-2">
                     <span className="rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-600 dark:bg-red-950 dark:text-red-300">
@@ -160,7 +277,9 @@ export default function TeachingPage() {
                   <CardDescription>{course.institution}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="mb-4 text-muted-foreground">{course.description}</p>
+                  <p className="mb-4 text-muted-foreground">
+                    {course.description}
+                  </p>
                   <div className="rounded-lg bg-background p-4">
                     <h4 className="mb-2 font-medium">Key Topics:</h4>
                     <ul className="ml-6 list-disc space-y-1 text-muted-foreground">
@@ -170,126 +289,51 @@ export default function TeachingPage() {
                     </ul>
                   </div>
                 </CardContent>
-                <CardFooter>
-                  <Button asChild variant="outline" size="sm">
-                    <Link href={`/teaching/courses/${course.id}`} className="flex items-center">
-                      View Syllabus
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </CardFooter>
               </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Teaching Approach */}
-      <section className="py-16 md:py-24">
+      {/* Teaching Approach Highlights */}
+      <section className="bg-muted py-16 md:py-24">
         <div className="container">
           <div className="grid gap-12 md:grid-cols-2 md:items-center">
-            <div>
-              <h2 className="mb-6 text-3xl font-bold tracking-tight md:text-4xl">Teaching Approach</h2>
-              <div className="space-y-4 text-muted-foreground">
-                <p>
-                  My teaching is informed by adult learning theory, constructivist approaches, and multicultural
-                  education principles. I create learning environments that are collaborative, respectful, and
-                  intellectually stimulating.
-                </p>
-                <p>
-                  In the classroom, I utilize a variety of teaching methods including lecture, discussion, case studies,
-                  role-plays, multimedia presentations, and experiential activities. This multimodal approach
-                  accommodates diverse learning styles and promotes deep engagement with the material.
-                </p>
-                <p>
-                  I view assessment as an integral part of the learning process. My courses include both formative and
-                  summative assessments that evaluate students' knowledge, skills, and professional dispositions. I
-                  provide timely, specific feedback to support students' growth and development.
-                </p>
-              </div>
-            </div>
             <div className="relative aspect-video overflow-hidden rounded-2xl">
               <Image
-                src="/placeholder.svg?height=400&width=600&text=Teaching%20in%20Action"
-                alt="Teaching in Action"
+                src="/ru.jpg"
+                alt="Teaching Approach"
                 fill
                 className="object-cover"
               />
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Student Mentoring */}
-      <section className="bg-muted py-16 md:py-24">
-        <div className="container">
-          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">Student Mentoring</h2>
-          <div className="mx-auto grid max-w-4xl gap-8">
-            <Card className="overflow-hidden rounded-2xl">
-              <CardHeader>
-                <CardTitle>Doctoral Dissertation Committees</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="mb-4 text-muted-foreground">
-                  I serve as chair or member on doctoral dissertation committees for students researching topics related
-                  to counselor education, supervision, multicultural counseling, and social justice advocacy.
+            <div>
+              <h2 className="mb-6 text-3xl font-bold tracking-tight md:text-4xl">
+                Instructional Approach
+              </h2>
+              <div className="space-y-4 text-muted-foreground">
+                <p>
+                  Asmau designs her courses with a focus on experiential
+                  learning and evidence-based practices. Her teaching
+                  methodologies include interactive lectures, case-based
+                  learning, small group discussions, and reflective practice
+                  exercises.
                 </p>
-                <div className="rounded-lg bg-background p-4">
-                  <h4 className="mb-2 font-medium">Recent Dissertation Topics:</h4>
-                  <ul className="ml-6 list-disc space-y-1 text-muted-foreground">
-                    <li>The Experiences of International Students in Counselor Education Programs</li>
-                    <li>Supervision Approaches for Counselors Working with Trauma Survivors</li>
-                    <li>Social Justice Advocacy Training in Counselor Education</li>
-                    <li>Multicultural Competence Development in Counseling Students</li>
-                  </ul>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden rounded-2xl">
-              <CardHeader>
-                <CardTitle>Research Mentorship</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="mb-4 text-muted-foreground">
-                  I mentor master's and doctoral students in developing research skills, preparing conference
-                  presentations, and publishing scholarly work. My goal is to help students become independent
-                  researchers who contribute meaningfully to the counseling literature.
+                <p>
+                  In substance abuse counseling courses, she integrates current
+                  research and clinical perspectives, bringing real-world
+                  scenarios into the classroom to prepare students for the
+                  complexities of addiction treatment.
                 </p>
-                <div className="rounded-lg bg-background p-4">
-                  <h4 className="mb-2 font-medium">Mentorship Activities:</h4>
-                  <ul className="ml-6 list-disc space-y-1 text-muted-foreground">
-                    <li>Research design and methodology consultation</li>
-                    <li>Manuscript preparation and submission guidance</li>
-                    <li>Conference proposal development</li>
-                    <li>Collaborative research projects</li>
-                    <li>Grant writing support</li>
-                  </ul>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden rounded-2xl">
-              <CardHeader>
-                <CardTitle>Professional Development Advising</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="mb-4 text-muted-foreground">
-                  I provide guidance to students on professional development, career planning, and navigating the
-                  academic and clinical job markets. This includes CV/resume review, interview preparation, and
-                  networking strategies.
+                <p>
+                  Assessment strategies are designed to evaluate both
+                  theoretical knowledge and applied skills, with opportunities
+                  for students to demonstrate competence through simulated
+                  counseling sessions, case conceptualizations, and
+                  research-informed treatment planning.
                 </p>
-                <div className="rounded-lg bg-background p-4">
-                  <h4 className="mb-2 font-medium">Student Achievements:</h4>
-                  <ul className="ml-6 list-disc space-y-1 text-muted-foreground">
-                    <li>Faculty positions at counselor education programs</li>
-                    <li>Clinical leadership roles in community mental health</li>
-                    <li>Research fellowships and grants</li>
-                    <li>Professional association leadership positions</li>
-                  </ul>
-                </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -299,10 +343,13 @@ export default function TeachingPage() {
         <div className="container">
           <div className="rounded-2xl bg-red-600 p-8 text-white shadow-lg md:p-12">
             <div className="mx-auto max-w-3xl text-center">
-              <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl">Interested in Collaboration?</h2>
+              <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl">
+                Interested in Counselor Education?
+              </h2>
               <p className="mb-8 text-lg text-red-100">
-                I welcome opportunities to collaborate on teaching initiatives, curriculum development, and educational
-                research projects.
+                Asmau welcomes inquiries about rehabilitation counseling
+                education, substance abuse counseling courses, and opportunities
+                for academic collaboration.
               </p>
               <Button asChild size="lg" variant="secondary">
                 <Link href="/contact">Get in Touch</Link>
@@ -312,5 +359,5 @@ export default function TeachingPage() {
         </div>
       </section>
     </div>
-  )
+  );
 }

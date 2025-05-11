@@ -25,17 +25,18 @@ const navItems: NavItem[] = [
   {
     title: "About",
     href: "/about",
-    subItems: [{ title: "Counseling", href: "/about/counseling" }],
+    subItems: [{ title: "Counseling", href: "/about#counseling" }],
   },
   {
     title: "Research",
     href: "/research",
     subItems: [
-      { title: "Publications", href: "/research/publications" },
-      { title: "Book Chapters", href: "/research/book-chapters" },
+      { title: "Book Chapters", href: "/research#book-chapters" },
+      { title: "Articles", href: "/research#articles" },
+      { title: "Books", href: "/research#books" },
       {
         title: "Conference Presentations",
-        href: "/research/conference-presentations",
+        href: "/research#conference-presentations",
       },
     ],
   },
@@ -108,7 +109,9 @@ export default function Navbar() {
                         : "text-foreground"
                     )}
                   >
-                    <Link href={item.href}>{item.title}</Link>
+                    <Link href={item.href} className="whitespace-nowrap">
+                      {item.title}
+                    </Link>
                   </span>
                   <ChevronDown className="ml-1 h-4 w-4" />
                   <div className="absolute left-0 top-full hidden pt-2 group-hover:block">
@@ -119,7 +122,7 @@ export default function Navbar() {
                             key={subItem.title}
                             href={subItem.href}
                             className={cn(
-                              "block rounded-lg px-3 py-2 text-sm transition-colors hover:bg-muted hover:text-red-600",
+                              "block rounded-lg px-3 py-2 text-sm transition-colors hover:bg-muted hover:text-red-600 whitespace-nowrap",
                               pathname === subItem.href
                                 ? "bg-muted text-red-600"
                                 : "text-foreground"

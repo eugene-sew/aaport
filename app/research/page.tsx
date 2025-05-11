@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, FileText, BookOpen, Users } from "lucide-react";
@@ -12,6 +14,8 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import BlobBackground from "@/components/blob-background";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 // Data-driven content
 const researchAreas = [
@@ -87,6 +91,30 @@ const conferencePresentations = [
 ];
 
 export default function ResearchPage() {
+  const [tab, setTab] = useState(publications[0].id);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const hash = window.location.hash.replace("#", "");
+      if (hash && publications.some((pub) => pub.id === hash)) {
+        setTab(hash);
+      }
+    }
+  }, []);
+
+  // Listen for hash changes
+  useEffect(() => {
+    const onHashChange = () => {
+      const hash = window.location.hash.replace("#", "");
+      if (hash && publications.some((pub) => pub.id === hash)) {
+        setTab(hash);
+      }
+    };
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+
   return (
     <div className="relative">
       <BlobBackground />
@@ -98,16 +126,18 @@ export default function ResearchPage() {
             src="/research.jpg"
             alt="Research background"
             fill
-            className="object-cover opacity-20"
+            className="object-cover opacity-80"
             priority
           />
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-red-700/80 to-black/90 z-10" />
         </div>
-        <div className="container relative z-10">
+        <div className="container relative z-20">
           <div className="mx-auto max-w-3xl text-center">
-            <h1 className="mb-6 text-4xl font-bold tracking-tight md:text-5xl">
+            <h1 className="mb-6 text-4xl font-bold tracking-tight md:text-5xl text-white">
               Research
             </h1>
-            <p className="mb-8 text-lg text-muted-foreground">
+            <p className="mb-8 text-lg text-white">
               Asmau's research contributions reflect her commitment to
               understanding and addressing pressing issues in mental health and
               rehabilitation
@@ -122,7 +152,7 @@ export default function ResearchPage() {
           <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
             Publications
           </h2>
-          <Tabs defaultValue={publications[0].id} className="w-full">
+          <Tabs value={tab} onValueChange={setTab} className="w-full">
             <TabsList className="justify-center mb-8">
               {publications.map((pub) => (
                 <TabsTrigger key={pub.id} value={pub.id} className="capitalize">
