@@ -86,85 +86,48 @@ export default function ResearchSection() {
       <div className="container mx-auto px-4">
         <div className="mb-12">
           <h2 className="text-xl font-bold tracking-tight mb-2">
-            Research Experience
+            Current Research
           </h2>
           <div className="w-24 h-1 bg-[#FF2819] mb-3 "></div>
-
-          <h3 className="text-3xl font-bold tracking-tight md:text-4xl mb-4">
-            Counselor Education and Supervision - PhD Candidate
-          </h3>
         </div>
 
-        <div className="w-full h-px bg-slate-700 my-8"></div>
-
-        <div className="grid gap-8 md:grid-cols-2">
-          {researchExperiences.map((experience) => (
-            <div key={experience.id} className="flex gap-6">
-              <div className="text-3xl font-bold text-white">
-                {experience.id}
-              </div>
-              <div>
-                <div className="mb-2">
-                  <h3 className="text-xl font-bold mb-2">{experience.title}</h3>
-                  <div className="w-12 h-1 bg-[#FF2819] mb-3"></div>
-                  <p className="text-slate-300">{experience.year}</p>
-                </div>
-              </div>
+        <div className="flex flex-col items-center justify-center min-h-[80vh] bg-white/20 backdrop-blur-sm text-white p-8 rounded-md">
+          <div className="max-w-4xl bg-black/45 rounded-2xl shadow-lg p-10">
+            <h1 className="text-3xl md:text-4xl font-bold text-center mb-6">
+              Intersecting Identities and Cultural Narratives
+            </h1>
+            <div className="w-16 h-1 bg-[#FF2819] mx-auto mb-6"></div>
+            <p className="text-center text-slate-300 text-lg mb-8">
+              A Study on Ethnicity, Disability, and Perception Among Autistic
+              Students in Ghana
+            </p>
+            <div className="text-slate-300 leading-relaxed text-justify">
+              <p className="mb-4">
+                This research investigates the intersection of ethnicity,
+                disability, and cultural narratives in shaping the experiences
+                of autistic students in Ghana.
+              </p>
+              <p className="mb-4">
+                It aims to explore how autistic individuals navigate issues of
+                identity, stigma, and social belonging within the complexities
+                of Ghana's cultural and ethnic landscape.
+              </p>
             </div>
-          ))}
-        </div>
-
-        <div className="flex justify-center mt-12">
-          <Button
-            asChild
-            className="bg-[#FF2819] hover:bg-[#FF2819]/90 text-white px-8 py-2 rounded"
-          >
-            <Link href="/research">
-              Read More <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
-
-        <div className="mt-16">
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl mb-4">
-            Research Publications
-          </h2>
-          <p className="mb-8 text-slate-300 max-w-3xl">
-            Asmau's research contributions reflect her commitment to
-            understanding and addressing pressing issues in mental health and
-            rehabilitation.
-          </p>
-
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {researchPublications.map((publication) => (
-              <Card
-                key={publication.id}
-                className="bg-white border-slate-700 text-gray-900 overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md"
-              >
-                <CardHeader className="pb-2">
-                  <div className="mb-2 rounded-full bg-slate-700 p-2 text-[#FF2819] w-fit">
-                    <publication.icon className="h-6 w-6" />
-                  </div>
-                  <CardTitle>{publication.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2 text-gray-700 font-light">
-                    {publication.items.map((item, index) => (
-                      <li key={index}>{item}</li>
-                    ))}
-                  </ul>
-                </CardContent>
-                <CardFooter>
-                  <Link
-                    href={publication.link}
-                    className="inline-flex items-center text-sm font-medium text-[#FF2819] transition-colors hover:text-[#FF2819]/90"
-                  >
-                    Learn More
-                    <ArrowRight className="ml-1 h-4 w-4" />
-                  </Link>
-                </CardFooter>
-              </Card>
-            ))}
+            <div className="text-center mt-8">
+              <p className="text-lg font-medium">
+                Year: <span className="text-slate-100">2024</span>
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-center mt-12">
+            <Button
+              asChild
+              className="bg-[#FF2819] hover:bg-[#FF2819]/90 text-white px-8 py-2 rounded"
+            >
+              <Link href="/research">
+                View All Research <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
           </div>
         </div>
       </div>
