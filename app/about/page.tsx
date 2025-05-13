@@ -207,7 +207,148 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Awards & Recognitions */}
+      <section className="py-16 md:py-24 bg-slate-50">
+        <div className="container">
+          <h2 className="mb-8 text-center text-3xl font-bold tracking-tight md:text-4xl">
+            Awards & Recognitions
+          </h2>
+          <div className="mx-auto max-w-4xl">
+            <Card className="rounded-xl shadow-md">
+              <CardHeader className="pb-3">
+                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-red-100">
+                  <Award className="h-6 w-6 text-red-600" />
+                </div>
+                <CardTitle>Honors & Achievements</CardTitle>
+                <CardDescription>
+                  Recognition for excellence in research, community service, and
+                  academic achievement
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid gap-6 md:grid-cols-2">
+                  <div>
+                    <h4 className="mb-3 text-lg font-semibold">
+                      Academic Awards
+                    </h4>
+                    <ul className="space-y-2 text-muted-foreground">
+                      <li className="flex items-start">
+                        <span className="mr-2 mt-1 text-red-600">•</span>
+                        <span>Summer Research Fellowship, 2025</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2 mt-1 text-red-600">•</span>
+                        <span>
+                          Graduate School Travel Fellowship, Spring 2025
+                        </span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2 mt-1 text-red-600">•</span>
+                        <span>Scully-Hill Diversity Award, Spring 2024</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2 mt-1 text-red-600">•</span>
+                        <span>Rehab Counseling Travel Grant</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2 mt-1 text-red-600">•</span>
+                        <span>
+                          College of Education Research Hard Cost Grant, Spring
+                          Semester, 2023
+                        </span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2 mt-1 text-red-600">•</span>
+                        <span>
+                          Office of Rehabilitation and Disability Studies,
+                          conference grant 2023, 2024, 2025
+                        </span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2 mt-1 text-red-600">•</span>
+                        <span>
+                          African Studies Department, conference grant 2024,
+                          2025
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="mb-3 text-lg font-semibold">
+                      Leadership & Community Recognition
+                    </h4>
+                    <ul className="space-y-2 text-muted-foreground">
+                      <li className="flex items-start">
+                        <span className="mr-2 mt-1 text-red-600">•</span>
+                        <span>
+                          Ghana Muslim Achievers Awards - Most Promising Muslim
+                          Female of the Year, 2020
+                        </span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2 mt-1 text-red-600">•</span>
+                        <span>
+                          Honorary Citation - Zongo Focus, Zongo Person of the
+                          Year 2020
+                        </span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2 mt-1 text-red-600">•</span>
+                        <span>
+                          Department of State-sponsored program, Youth Adult
+                          Mentor - USA (2019)
+                        </span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2 mt-1 text-red-600">•</span>
+                        <span>
+                          Department of State-sponsored program (Study of the US
+                          Institute for 2019)
+                        </span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2 mt-1 text-red-600">•</span>
+                        <span>Carter Center mini-grant award, 2015</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2 mt-1 text-red-600">•</span>
+                        <span>
+                          Human Rights Training - Tostan Training Centre/Carter
+                          Center (2015, 2016, 2017)
+                        </span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2 mt-1 text-red-600">•</span>
+                        <span>
+                          YALI Tech Training on Community Grassroots Mobilizing
+                          - US Embassy/South Africa (2015)
+                        </span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2 mt-1 text-red-600">•</span>
+                        <span>
+                          Representative - UN Women Youth Consultative
+                          Conference - Kigali/Rwanda 2011
+                        </span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2 mt-1 text-red-600">•</span>
+                        <span>
+                          Africa's Young Promising Female Leader (MILEAD
+                          FELLOWSHIP AWARD) 2010
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* Academic Credentials CTA */}
+
       <section className="py-16 md:py-20">
         <div className="container">
           <div className="mx-auto max-w-3xl rounded-2xl bg-red-50 p-8 text-center">
