@@ -1,15 +1,21 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Mail, Phone, MapPin, Send } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { toast } from "@/hooks/use-toast"
+import { useState } from "react";
+import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/hooks/use-toast";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -17,61 +23,66 @@ export default function ContactPage() {
     email: "",
     subject: "",
     message: "",
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!formData.name || !formData.email || !formData.message) {
       toast({
         title: "Error",
         description: "Please fill in all required fields",
         variant: "destructive",
-      })
-      return
+      });
+      return;
     }
 
-    setIsSubmitting(true)
+    setIsSubmitting(true);
 
     try {
       // This would be replaced with actual Supabase integration
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+      await new Promise((resolve) => setTimeout(resolve, 1500));
 
       toast({
         title: "Message Sent",
         description: "Thank you for your message. I'll get back to you soon!",
-      })
+      });
 
       setFormData({
         name: "",
         email: "",
         subject: "",
         message: "",
-      })
+      });
     } catch (error) {
       toast({
         title: "Error",
         description: "Failed to send message. Please try again later.",
         variant: "destructive",
-      })
+      });
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <div className="container py-12 md:py-16">
       <div className="mb-12 space-y-4 text-center">
-        <h1 className="text-4xl font-bold tracking-tight md:text-5xl">Contact Me</h1>
+        <h1 className="text-4xl font-bold tracking-tight md:text-5xl">
+          Contact Me
+        </h1>
         <p className="mx-auto max-w-2xl text-muted-foreground">
-          Have a question or want to discuss a potential collaboration? Feel free to reach out using the form below or
-          through my contact information.
+          Have a question or want to discuss a potential collaboration? Feel
+          free to reach out using the form below or through my contact
+          information.
         </p>
       </div>
 
@@ -79,7 +90,10 @@ export default function ContactPage() {
         <Card className="overflow-hidden rounded-2xl md:col-span-2">
           <CardHeader>
             <CardTitle>Send a Message</CardTitle>
-            <CardDescription>Fill out the form below and I'll get back to you as soon as possible.</CardDescription>
+            <CardDescription>
+              Fill out the form below and I'll get back to you as soon as
+              possible.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -136,7 +150,11 @@ export default function ContactPage() {
                   required
                 />
               </div>
-              <Button type="submit" className="w-full bg-red-600 hover:bg-red-700" disabled={isSubmitting}>
+              <Button
+                type="submit"
+                className="w-full bg-red-600 hover:bg-red-700"
+                disabled={isSubmitting}
+              >
                 {isSubmitting ? (
                   <>
                     <Send className="mr-2 h-4 w-4 animate-spin" />
@@ -163,7 +181,10 @@ export default function ContactPage() {
                 <Mail className="mt-0.5 h-5 w-5 text-red-600" />
                 <div>
                   <p className="font-medium">Email</p>
-                  <a href="mailto:contact@asmauayub.com" className="text-sm text-muted-foreground hover:text-red-600">
+                  <a
+                    href="mailto:contact@asmauayub.com"
+                    className="text-sm text-muted-foreground hover:text-red-600"
+                  >
                     contact@asmauayub.com
                   </a>
                 </div>
@@ -172,7 +193,10 @@ export default function ContactPage() {
                 <Phone className="mt-0.5 h-5 w-5 text-red-600" />
                 <div>
                   <p className="font-medium">Phone</p>
-                  <a href="tel:+1234567890" className="text-sm text-muted-foreground hover:text-red-600">
+                  <a
+                    href="tel:+1234567890"
+                    className="text-sm text-muted-foreground hover:text-red-600"
+                  >
                     (123) 456-7890
                   </a>
                 </div>
@@ -192,31 +216,6 @@ export default function ContactPage() {
               </div>
             </CardContent>
           </Card>
-
-          <Card className="overflow-hidden rounded-2xl">
-            <CardHeader>
-              <CardTitle>Office Hours</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span>Monday - Thursday</span>
-                  <span>9:00 AM - 4:00 PM</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Friday</span>
-                  <span>9:00 AM - 1:00 PM</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Saturday - Sunday</span>
-                  <span>Closed</span>
-                </div>
-                <p className="mt-4 text-sm text-muted-foreground">
-                  Appointments outside of office hours available upon request.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </div>
 
@@ -225,8 +224,8 @@ export default function ContactPage() {
           <CardHeader>
             <CardTitle>Request My CV</CardTitle>
             <CardDescription>
-              Interested in learning more about my academic and professional background? Request a copy of my curriculum
-              vitae.
+              Interested in learning more about my academic and professional
+              background? Request a copy of my curriculum vitae.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -237,5 +236,5 @@ export default function ContactPage() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

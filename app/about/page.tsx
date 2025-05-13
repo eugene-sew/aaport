@@ -58,9 +58,9 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="order-1 flex justify-center md:order-2">
-              <div className="relative h-72 w-72 md:h-96 md:w-96">
+              <div className="relative h-72 w-72 md:h-[500px] md:w-96">
                 <Image
-                  src="/img.png"
+                  src="/about.jpg"
                   alt="Asmau Ayub"
                   fill
                   className="object-contain"

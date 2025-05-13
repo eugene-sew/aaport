@@ -26,7 +26,7 @@ const courses = [
     id: 1,
     title: "Substance Abuse Counseling",
     code: "CEP 873",
-    level: "Graduate",
+    level: "Undergraduate",
     institution: "Michigan State University",
     description:
       "A comprehensive course on substance abuse counseling theory and practice. Students learn assessment, intervention, and treatment approaches for substance use disorders.",
@@ -82,7 +82,7 @@ const teachingPhilosophy = [
   {
     title: "Critical Thinking",
     description:
-      "Students are encouraged to analyze, evaluate, and synthesize information from multiple perspectives, developing the analytical skills necessary for effective clinical decision-making in complex counseling situations.",
+      "Students are encouraged to analyze, evaluate, and synthesize information from multiple perspectives, developing the analytical skills necessary for effective clinical decision-making in complex situations.",
     icon: <BookOpen className="h-6 w-6" />,
   },
   {
@@ -301,7 +301,7 @@ export default function TeachingPage() {
           <div className="grid gap-12 md:grid-cols-2 md:items-center">
             <div className="relative aspect-video overflow-hidden rounded-2xl">
               <Image
-                src="/ru.jpg"
+                src="/abs.jpg"
                 alt="Teaching Approach"
                 fill
                 className="object-cover"

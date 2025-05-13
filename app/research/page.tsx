@@ -184,7 +184,7 @@ export default function ResearchPage() {
                         </div>
                         <CardTitle className="text-lg">{entry}</CardTitle>
                       </CardHeader>
-                      <CardFooter>
+                      {/* <CardFooter>
                         <Link
                           href={pub.link}
                           className="inline-flex items-center text-sm font-medium text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
@@ -192,7 +192,7 @@ export default function ResearchPage() {
                           View Detail
                           <ArrowRight className="ml-1 h-4 w-4" />
                         </Link>
-                      </CardFooter>
+                      </CardFooter> */}
                     </Card>
                   ))}
                 </div>
