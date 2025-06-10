@@ -11,6 +11,7 @@ import {
   Mail,
   Bookmark,
   MessageCircle,
+  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,6 +27,8 @@ import AwardsAndHonorsSection from "@/components/new/AwardsAndHonorsSection";
 import TeachingExperienceSection from "@/components/new/TeachingExperienceSection";
 import ResearchProjectsSection from "@/components/new/ResearchProjectsSection";
 import { toast } from "@/hooks/use-toast";
+import FeaturedBlogPosts from "@/components/blog/FeaturedBlogPosts";
+import { format } from "date-fns";
 
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
@@ -110,7 +113,7 @@ export default function Home() {
           {/* </div> */}
 
           {/* quick bio */}
-          <p className="absolute bottom-0 left-0 right-0 ">
+          <div className="absolute bottom-0 left-0 right-0">
             <div className="container px-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
                 <div className="bg-white p-8 md:p-12">
@@ -145,7 +148,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </p>
+          </div>
 
           <p className="mx-auto mb-8 max-w-2xl text-center text-muted-foreground">
             With over a decade of clinical experience, I am passionate about
@@ -167,65 +170,6 @@ export default function Home() {
       <ResearchProjectsSection />
 
       {/* Latest Blog Posts */}
-      {/* <section className="bg-muted py-16 md:py-24">
-        <div className="container">
-          <div className="mb-12 flex flex-wrap items-center justify-between gap-4">
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
-              Latest Blog Posts
-            </h2>
-            <Button asChild variant="outline">
-              <Link href="/blog">View All Posts</Link>
-            </Button>
-          </div>
-
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {[1, 2, 3].map((i) => (
-              <Card
-                key={i}
-                className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md"
-              >
-                <div className="aspect-video overflow-hidden">
-                  <Image
-                    src={`/placeholder.svg?height=250&width=500&text=Blog%20Image%20${i}`}
-                    alt={`Blog post ${i}`}
-                    width={500}
-                    height={250}
-                    className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
-                  />
-                </div>
-                <CardHeader>
-                  <div className="mb-2 text-sm text-muted-foreground">
-                    {new Date().toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </div>
-
-                  <CardTitle className="line-clamp-2">
-                    Exploring the Intersection of Counseling and Social Justice
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="line-clamp-3">
-                    Reflections on how counseling practices can promote equity
-                    and address systemic barriers to mental health care access.
-                  </CardDescription>
-                </CardContent>
-                <CardFooter>
-                  <Link
-                    href={`/blog/post-${i}`}
-                    className="inline-flex items-center text-sm font-medium text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
-                  >
-                    Read More
-                    <ArrowRight className="ml-1 h-4 w-4" />
-                  </Link>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section> */}
 
       <section className="py-16 md:py-24 bg-slate-50 dark:bg-slate-900">
         <div className="container px-4 mx-auto max-w-4xl">
@@ -239,75 +183,10 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="mb-14">
-            {/* No blog posts state with refined styling */}
-            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-8 text-center">
-              <div className="mx-auto w-12 h-12 rounded-full bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center mb-5">
-                <Bookmark
-                  className="text-[#FF2819] dark:text-[#FF2819]/70"
-                  size={20}
-                />
-              </div>
-              <h3 className="text-xl font-medium mb-3">Blog Coming Soon</h3>
-              <p className="text-slate-600 dark:text-slate-300 max-w-lg mx-auto">
-                I'm currently preparing thoughtful content to share with you.
-                Check back soon for articles on my research, academic insights,
-                and professional reflections.
-              </p>
-            </div>
-          </div>
-
-          {/* Newsletter section with personal blog styling */}
-          <div className="max-w-md mx-auto">
-            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center">
-                  <MessageCircle
-                    className="text-[#FF2819] dark:text-[#FF2819]/70"
-                    size={18}
-                  />
-                </div>
-                <div>
-                  <h3 className="text-lg font-medium">Subscribe to My Blog</h3>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">
-                    Never miss a new post
-                  </p>
-                </div>
-              </div>
-
-              {subscribed ? (
-                <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-md p-4 text-center">
-                  <p className="text-indigo-700 dark:text-indigo-300 font-medium">
-                    Thank you for subscribing!
-                  </p>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
-                    I'll notify you when new content is published.
-                  </p>
-                </div>
-              ) : (
-                <div className="space-y-3">
-                  <div className="relative">
-                    <input
-                      type="email"
-                      placeholder="Your email address"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-3 py-2 rounded-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 text-sm"
-                    />
-                  </div>
-                  <button
-                    onClick={handleSubscribe}
-                    className="w-full py-2 px-3 bg-[#FF2819] hover:bg-indigo-700 text-white font-medium rounded-md transition-colors duration-200 text-sm"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? "Subscribing..." : "Subscribe"}
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
+          <FeaturedBlogPosts />
         </div>
       </section>
+
       {/* CTA Section */}
       <section className="py-16 md:py-24">
         <div className="container">
