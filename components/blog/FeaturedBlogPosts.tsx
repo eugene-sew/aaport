@@ -9,12 +9,12 @@ import Link from "next/link";
 export default function FeaturedBlogPosts() {
   const { useFeaturedBlogs, useBlogCategories } = useBlogQueries();
 
-  // Fetch featured blog posts (latest 3)
+  // Fetch featured blog posts (latest 3 only)
   const {
     data: featuredPosts = [],
     isLoading: postsLoading,
     error: postsError,
-  } = useFeaturedBlogs(3);
+  } = useFeaturedBlogs(3); // Limit to 3 posts
 
   // Fetch blog categories
   const { data: categories = [], isLoading: categoriesLoading } =
@@ -69,17 +69,18 @@ export default function FeaturedBlogPosts() {
     );
   }
 
-  // Display featured posts
+  // Display featured posts (only the 3 most recent)
   return (
     <div className="mb-5">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
-        {featuredPosts.map((post) => (
+        {featuredPosts.slice(0, 3).map((post) => (
           <BlogCard
             key={post.id}
             post={post}
             categoryName={
               post.category_id ? getCategoryName(post.category_id) : undefined
             }
+            className="h-full" // Ensure each card takes full height
           />
         ))}
       </div>

@@ -11,15 +11,16 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 interface BlogCardProps {
   post: Content;
   categoryName?: string;
+  className?: string;
 }
 
-export default function BlogCard({ post, categoryName }: BlogCardProps) {
+export default function BlogCard({ post, categoryName, className = '' }: BlogCardProps) {
   const formattedDate = post.published_at 
     ? format(new Date(post.published_at), "MMMM d, yyyy")
     : format(new Date(post.created_at), "MMMM d, yyyy");
 
   return (
-    <Card className="overflow-hidden h-full flex flex-col">
+    <Card className={`overflow-hidden h-full flex flex-col ${className}`}>
       <div className="relative h-48 w-full">
         {post.featured_image ? (
           <Image

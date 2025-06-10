@@ -171,8 +171,8 @@ export default function Home() {
 
       {/* Latest Blog Posts */}
 
-      <section className="py-16 md:py-24 bg-slate-50 dark:bg-slate-900">
-        <div className="container px-4 mx-auto max-w-4xl">
+      <section className="py-16 md:py-24 px-12 md:px-24 bg-slate-50 dark:bg-slate-900">
+        <div className="container px-4 mx-auto max-w-full">
           <div className="mb-12 text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-3">
               Latest Blog Posts
