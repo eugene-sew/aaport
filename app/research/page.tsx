@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, FileText, BookOpen, Users } from "lucide-react";
+import { ArrowRight, FileText, BookOpen, Users, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,94 +15,128 @@ import {
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import BlobBackground from "@/components/blob-background";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { useResearchQueries } from "@/hooks/useResearchQuery";
+import { ResearchType, ResearchWork } from "@/store/researchStore";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Badge } from "@/components/ui/badge";
+import { format } from "date-fns";
 
-// Data-driven content
-const researchAreas = [
-  {
-    title: "Multicultural Supervision",
-    description:
-      "Exploring how cultural factors influence the supervisory relationship and developing models for culturally responsive supervision in counselor training.",
-    imgText: "Multicultural Supervision",
-  },
-  {
-    title: "Social Justice Advocacy",
-    description:
-      "Investigating how counselors can effectively advocate for systemic change and address inequities in mental health care access and delivery.",
-    imgText: "Social Justice Advocacy",
-  },
-  {
-    title: "Counselor Development",
-    description:
-      "Studying the factors that contribute to effective counselor training and professional identity development across the career lifespan.",
-    imgText: "Counselor Development",
-  },
-];
 
-const publications = [
-  {
+
+// Publication type mapping
+const publicationTypeMap = {
+  book_chapter: {
     id: "book-chapters",
     label: "Book Chapters",
     icon: FileText,
-    entries: [
-      "Ayub, A., Wiafe, E. (In-press). Journeys of Becoming Critical Scholars: Volume 1 & 2.",
-      "Shultz, J., Ayub, A. (2024). Designing Supervision Intervention to Strengthen Supervisee Competency. In C.B & E.B. Shultz (Eds.) Clinical Supervision: A Handbook for Counselors.",
-    ],
-    images: [], // provision for images
-    link: "/research/publications/book-chapters",
   },
-  {
+  article: {
     id: "articles",
     label: "Articles",
     icon: BookOpen,
-    entries: [
-      "Ayub, A., Lee, G., Easley, T. (under review). Perceiving Acceptance Through the Lens of Autistic College Students",
-      "Ayub, A., Umucu, E., & Lee, G. (in preparation). Veteran Employment Needs: A Scoping Review",
-    ],
-    images: [],
-    link: "/research/publications/articles",
   },
-  {
-    id: "books",
-    label: "Books",
+  publication: {
+    id: "publications",
+    label: "Publications",
     icon: Users,
-    entries: [
-      "Ayub, A., Danquah, S.A., Bruce, D. (2013). Foster and Biological Parenting: Impact on Personality and Cognitive Performance.",
-    ],
-    images: [],
-    link: "/research/publications/books",
   },
-];
+};
 
-const conferencePresentations = [
-  {
-    title:
-      "Perceiving Acceptance Through the Lens of Autistic College Students",
-    context:
-      "Council for Exceptional Children: Division on Autism and Developmental Disabilities annual International conference, January 2025",
-    image: "/autism.jpg",
-  },
-  {
-    title:
-      "The Art of Supervision: Reflecting on Supervisee Qualities in Clinical Supervision",
-    context: "November 2023",
-    image: "/super.png",
-  },
-];
+// Loading skeleton for research items
+const ResearchSkeleton = () => (
+  <div className="space-y-4">
+    {[1, 2, 3].map((i) => (
+      <Card key={i} className="overflow-hidden rounded-2xl">
+        <CardHeader>
+          <Skeleton className="h-10 w-10 rounded-full mb-2" />
+          <Skeleton className="h-6 w-full" />
+          <Skeleton className="h-4 w-3/4 mt-2" />
+        </CardHeader>
+      </Card>
+    ))}
+  </div>
+);
+
+// Format research work title with authors and year
+const formatResearchCitation = (work: ResearchWork) => {
+  const authors = work.co_authors?.length > 0 
+    ? `${work.co_authors.join(", ")}` 
+    : "";
+  
+  return `${authors}${authors ? ", " : ""}(${work.year}). ${work.title}.`;
+};
 
 export default function ResearchPage() {
-  const [tab, setTab] = useState(publications[0].id);
+  const { usePublishedResearchWorks, useResearchCategories } = useResearchQueries();
+  
+  // Fetch all published research works
+  const { data: researchData, isLoading: isLoadingResearch } = usePublishedResearchWorks({
+    limit: 100, // Get all published research
+  });
+  
+  // Fetch research categories
+  const { data: categoriesData, isLoading: isLoadingCategories } = useResearchCategories();
+  
+  // Group research works by type
+  const researchByType = useMemo(() => {
+    if (!researchData?.works) return {};
+    
+    return researchData.works.reduce<Record<string, ResearchWork[]>>((acc, work) => {
+      if (!acc[work.research_type]) {
+        acc[work.research_type] = [];
+      }
+      acc[work.research_type].push(work);
+      return acc;
+    }, {});
+  }, [researchData]);
+  
+  // Create publication tabs based on available research types
+  const publications = useMemo(() => {
+    const types = Object.keys(researchByType).filter(
+      (type) => type !== "conference_presentation"
+    );
+    
+    return types.map((type) => ({
+      ...publicationTypeMap[type as keyof typeof publicationTypeMap] || {
+        id: type,
+        label: type.replace("_", " "),
+        icon: FileText,
+      },
+      entries: researchByType[type].map(formatResearchCitation),
+      works: researchByType[type],
+      images: researchByType[type]
+        .filter((work) => work.featured_image)
+        .map((work) => work.featured_image as string),
+    }));
+  }, [researchByType]);
+  
+  // Get conference presentations
+  const conferencePresentations = useMemo(() => {
+    return researchByType["conference_presentation"] || [];
+  }, [researchByType]);
+  
+  // Tab state
+  const [tab, setTab] = useState("");
   const pathname = usePathname();
-
+  
+  // Initialize tab when publications are loaded
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (publications.length > 0 && !tab) {
+      setTab(publications[0].id);
+    }
+  }, [publications, tab]);
+  
+  // Handle hash changes
+  useEffect(() => {
+    if (typeof window !== "undefined" && publications.length > 0) {
       const hash = window.location.hash.replace("#", "");
       if (hash && publications.some((pub) => pub.id === hash)) {
         setTab(hash);
       }
     }
-  }, []);
-
+  }, [publications]);
+  
   // Listen for hash changes
   useEffect(() => {
     const onHashChange = () => {
@@ -113,7 +147,7 @@ export default function ResearchPage() {
     };
     window.addEventListener("hashchange", onHashChange);
     return () => window.removeEventListener("hashchange", onHashChange);
-  }, []);
+  }, [publications]);
 
   return (
     <div className="relative">
@@ -152,91 +186,161 @@ export default function ResearchPage() {
           <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
             Publications
           </h2>
-          <Tabs value={tab} onValueChange={setTab} className="w-full">
-            <TabsList className="justify-center mb-8">
+
+          {isLoadingResearch ? (
+            <ResearchSkeleton />
+          ) : publications.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">No publications found.</p>
+            </div>
+          ) : (
+            <Tabs value={tab} onValueChange={setTab} className="w-full">
+              <TabsList className="justify-center mb-8">
+                {publications.map((pub) => (
+                  <TabsTrigger key={pub.id} value={pub.id} className="capitalize">
+                    {pub.label}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+              
               {publications.map((pub) => (
-                <TabsTrigger key={pub.id} value={pub.id} className="capitalize">
-                  {pub.label}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-            {publications.map((pub) => (
-              <TabsContent key={pub.id} value={pub.id} className="space-y-4">
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                  {pub.images.length > 0 &&
-                    pub.images.map((src, idx) => (
-                      <Image
-                        key={idx}
-                        src={src}
-                        alt={`${pub.label} image ${idx + 1}`}
-                        width={200}
-                        height={200}
-                        className="rounded-lg"
-                      />
-                    ))}
-                </div>
-                <div className="space-y-2">
-                  {pub.entries.map((entry, idx) => (
-                    <Card key={idx} className="overflow-hidden rounded-2xl">
-                      <CardHeader>
-                        <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300 w-fit">
-                          <pub.icon className="h-6 w-6" />
+                <TabsContent key={pub.id} value={pub.id} className="space-y-4">
+                  {/* Featured Images */}
+                  {pub.images.length > 0 && (
+                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                      {pub.images.map((src, idx) => (
+                        <div key={idx} className="relative aspect-video rounded-lg overflow-hidden">
+                          <Image
+                            src={src}
+                            alt={`${pub.label} image ${idx + 1}`}
+                            fill
+                            className="object-cover"
+                          />
                         </div>
-                        <CardTitle className="text-lg">{entry}</CardTitle>
-                      </CardHeader>
-                      {/* <CardFooter>
-                        <Link
-                          href={pub.link}
-                          className="inline-flex items-center text-sm font-medium text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
-                        >
-                          View Detail
-                          <ArrowRight className="ml-1 h-4 w-4" />
-                        </Link>
-                      </CardFooter> */}
-                    </Card>
-                  ))}
-                </div>
-              </TabsContent>
-            ))}
-          </Tabs>
+                      ))}
+                    </div>
+                  )}
+                  
+                  {/* Research Entries */}
+                  <div className="space-y-4">
+                    {pub.works && pub.works.map((work) => (
+                      <Card key={work.id} className="overflow-hidden rounded-2xl">
+                        <CardHeader>
+                          <div className="flex justify-between items-start">
+                            <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300 w-fit">
+                              <pub.icon className="h-6 w-6" />
+                            </div>
+                            <Badge variant="outline" className="text-xs">
+                              {work.year}
+                            </Badge>
+                          </div>
+                          <CardTitle className="text-lg">
+                            {work.title}
+                          </CardTitle>
+                          {work.co_authors?.length > 0 && (
+                            <CardDescription className="mt-1">
+                              Authors: {work.co_authors.join(", ")}
+                            </CardDescription>
+                          )}
+                          {work.excerpt && (
+                            <p className="mt-2 text-muted-foreground text-sm">
+                              {work.excerpt}
+                            </p>
+                          )}
+                        </CardHeader>
+                        <CardFooter className="pt-0">
+                          <Link
+                            href={`/research/${work.slug}`}
+                            className="inline-flex items-center text-sm font-medium text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
+                          >
+                            View Details
+                            <ArrowRight className="ml-1 h-4 w-4" />
+                          </Link>
+                        </CardFooter>
+                      </Card>
+                    ))}
+                  </div>
+                </TabsContent>
+              ))}
+            </Tabs>
+          )}
         </div>
       </section>
 
       {/* Conference Presentations */}
-      <section className="py-16 md:py-24">
-        <div className="container">
-          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
-            Conference Presentations
-          </h2>
-          <div className="mx-auto max-w-6xl">
-            <div className="grid gap-8 md:grid-cols-2">
-              {conferencePresentations.map((conf, idx) => (
-                <Card
-                  key={idx}
-                  className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-lg"
-                >
-                  <div className="relative h-64">
-                    <Image
-                      src={conf.image}
-                      alt={`${conf.title} conference banner`}
-                      fill
-                      className="object-cover transition-transform duration-300 hover:scale-105"
-                    />
-                  </div>
-                  <CardHeader className="space-y-4">
-                    <CardTitle className="text-xl leading-tight">
-                      {conf.title}
-                    </CardTitle>
-                    <CardDescription className="text-sm font-medium text-muted-foreground">
-                      {conf.context}
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
-              ))}
-            </div>
+      {conferencePresentations.length > 0 && (
+        <section className="py-16 md:py-24">
+          <div className="container">
+            <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
+              Conference Presentations
+            </h2>
+            
+            {isLoadingResearch ? (
+              <div className="grid gap-8 md:grid-cols-2">
+                {[1, 2].map((i) => (
+                  <Card key={i} className="overflow-hidden rounded-2xl">
+                    <div className="relative h-64">
+                      <Skeleton className="h-full w-full" />
+                    </div>
+                    <CardHeader>
+                      <Skeleton className="h-6 w-3/4 mb-2" />
+                      <Skeleton className="h-4 w-1/2" />
+                    </CardHeader>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <div className="mx-auto max-w-6xl">
+                <div className="grid gap-8 md:grid-cols-2">
+                  {conferencePresentations.map((work) => (
+                    <Card
+                      key={work.id}
+                      className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-lg"
+                    >
+                      {work.featured_image ? (
+                        <div className="relative h-64">
+                          <Image
+                            src={work.featured_image}
+                            alt={`${work.title} conference banner`}
+                            fill
+                            className="object-cover transition-transform duration-300 hover:scale-105"
+                          />
+                        </div>
+                      ) : (
+                        <div className="h-32 bg-muted flex items-center justify-center">
+                          <FileText className="h-12 w-12 text-muted-foreground/50" />
+                        </div>
+                      )}
+                      <CardHeader className="space-y-4">
+                        <CardTitle className="text-xl leading-tight">
+                          {work.title}
+                        </CardTitle>
+                        <CardDescription className="text-sm font-medium text-muted-foreground">
+                          {work.year} • {work.co_authors?.join(", ")}
+                        </CardDescription>
+                        {work.excerpt && (
+                          <p className="text-sm text-muted-foreground">
+                            {work.excerpt}
+                          </p>
+                        )}
+                      </CardHeader>
+                      <CardFooter>
+                        <Link
+                          href={`/research/${work.slug}`}
+                          className="inline-flex items-center text-sm font-medium text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
+                        >
+                          View Presentation
+                          <ArrowRight className="ml-1 h-4 w-4" />
+                        </Link>
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* CTA Section */}
       <section className="bg-muted py-16">

@@ -79,7 +79,8 @@ export default function ResearchPage() {
     refetch,
   } = useResearchWorks({
     status: status as ResearchStatus | "all",
-    researchType: researchType !== "all" ? (researchType as ResearchType) : undefined,
+    researchType:
+      researchType !== "all" ? (researchType as ResearchType) : undefined,
     categoryId,
     year,
     page,
@@ -160,9 +161,9 @@ export default function ResearchPage() {
   const getStatusBadge = (status: ResearchStatus) => {
     switch (status) {
       case "published":
-        return <Badge variant="success">Published</Badge>;
+        return <Badge variant="default">Published</Badge>;
       case "in_review":
-        return <Badge variant="warning">In Review</Badge>;
+        return <Badge variant="destructive">In Review</Badge>;
       case "ongoing":
         return <Badge variant="outline">Ongoing</Badge>;
       default:
@@ -213,10 +214,7 @@ export default function ResearchPage() {
           </div>
 
           {/* Status Filter */}
-          <Select
-            value={status}
-            onValueChange={handleStatusChange}
-          >
+          <Select value={status} onValueChange={handleStatusChange}>
             <SelectTrigger>
               <SelectValue placeholder="Status" />
             </SelectTrigger>
@@ -229,10 +227,7 @@ export default function ResearchPage() {
           </Select>
 
           {/* Type Filter */}
-          <Select
-            value={researchType}
-            onValueChange={handleTypeChange}
-          >
+          <Select value={researchType} onValueChange={handleTypeChange}>
             <SelectTrigger>
               <SelectValue placeholder="Type" />
             </SelectTrigger>
@@ -241,7 +236,9 @@ export default function ResearchPage() {
               <SelectItem value="publication">Publication</SelectItem>
               <SelectItem value="book_chapter">Book Chapter</SelectItem>
               <SelectItem value="article">Article</SelectItem>
-              <SelectItem value="conference_presentation">Conference Presentation</SelectItem>
+              <SelectItem value="conference_presentation">
+                Conference Presentation
+              </SelectItem>
             </SelectContent>
           </Select>
 
@@ -311,10 +308,13 @@ export default function ResearchPage() {
                 <TableCell colSpan={6} className="text-center py-8">
                   <div className="flex flex-col items-center justify-center">
                     <BookOpen className="h-12 w-12 text-muted-foreground mb-2" />
-                    <p className="text-muted-foreground">No research works found</p>
+                    <p className="text-muted-foreground">
+                      No research works found
+                    </p>
                     <Button asChild className="mt-4">
                       <Link href="/admin/research/add">
-                        <Plus className="mr-2 h-4 w-4" /> Add Your First Research
+                        <Plus className="mr-2 h-4 w-4" /> Add Your First
+                        Research
                       </Link>
                     </Button>
                   </div>
@@ -325,7 +325,9 @@ export default function ResearchPage() {
                 <TableRow key={work.id}>
                   <TableCell className="font-medium">{work.title}</TableCell>
                   <TableCell>{work.year}</TableCell>
-                  <TableCell>{formatResearchType(work.research_type)}</TableCell>
+                  <TableCell>
+                    {formatResearchType(work.research_type)}
+                  </TableCell>
                   <TableCell>{getCategoryName(work.category_id)}</TableCell>
                   <TableCell>{getStatusBadge(work.status)}</TableCell>
                   <TableCell className="text-right">
@@ -372,23 +374,26 @@ export default function ResearchPage() {
                 className={page === 1 ? "pointer-events-none opacity-50" : ""}
               />
             </PaginationItem>
-            
-            {Array.from({ length: researchData.totalPages }, (_, i) => i + 1).map(
-              (pageNum) => (
-                <PaginationItem key={pageNum}>
-                  <PaginationLink
-                    isActive={pageNum === page}
-                    onClick={() => setPage(pageNum)}
-                  >
-                    {pageNum}
-                  </PaginationLink>
-                </PaginationItem>
-              )
-            )}
-            
+
+            {Array.from(
+              { length: researchData.totalPages },
+              (_, i) => i + 1
+            ).map((pageNum) => (
+              <PaginationItem key={pageNum}>
+                <PaginationLink
+                  isActive={pageNum === page}
+                  onClick={() => setPage(pageNum)}
+                >
+                  {pageNum}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+
             <PaginationItem>
               <PaginationNext
-                onClick={() => setPage((p) => Math.min(p + 1, researchData.totalPages))}
+                onClick={() =>
+                  setPage((p) => Math.min(p + 1, researchData.totalPages))
+                }
                 className={
                   page === researchData.totalPages
                     ? "pointer-events-none opacity-50"
