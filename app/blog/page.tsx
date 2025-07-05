@@ -16,7 +16,14 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useBlogQueries } from "@/hooks/useBlogQuery";
 import BlogCard from "@/components/blog/BlogCard";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 export default function BlogPage() {
   const [email, setEmail] = useState("");
@@ -24,29 +31,29 @@ export default function BlogPage() {
   const [subscribed, setSubscribed] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState<number | undefined>(undefined);
+  const [selectedCategory, setSelectedCategory] = useState<number | undefined>(
+    undefined
+  );
   const postsPerPage = 6;
 
   const { usePublishedBlogs, useBlogCategories } = useBlogQueries();
-  
+
   // Fetch published blog posts
-  const { 
+  const {
     data: blogData = { contents: [], count: 0 },
     isLoading: blogsLoading,
-    error: blogsError 
+    error: blogsError,
   } = usePublishedBlogs({
     categoryId: selectedCategory,
     limit: postsPerPage,
     offset: (currentPage - 1) * postsPerPage,
-    searchTerm: searchTerm
+    searchTerm: searchTerm,
   });
 
   // Fetch blog categories
-  const { 
-    data: categories = [],
-    isLoading: categoriesLoading 
-  } = useBlogCategories();
-  
+  const { data: categories = [], isLoading: categoriesLoading } =
+    useBlogCategories();
+
   const handleSearch = () => {
     setCurrentPage(1); // Reset to first page on new search
   };
@@ -61,20 +68,22 @@ export default function BlogPage() {
       setSubscribed(true);
     }, 1500);
   };
-  
+
   // Get category name by id
   const getCategoryName = (categoryId: number) => {
-    const category = categories.find(cat => cat.id === categoryId);
+    const category = categories.find((cat) => cat.id === categoryId);
     return category ? category.name : "";
   };
 
   return (
     <div className="container py-12 md:py-16">
       <div className="mb-12 space-y-4 text-center">
-        <h1 className="text-4xl font-bold tracking-tight md:text-5xl">Blog</h1>
+        <h1 className="text-4xl font-bold tracking-tight md:text-4xl">
+          Blog Posts
+        </h1>
         <p className="mx-auto max-w-2xl text-muted-foreground">
-          Insights, reflections, and inspirational content on counseling
-          psychology, mental health, and professional development.
+          "Thoughts, reflections and insights on life, research and the evolving
+          landscape of academia"
         </p>
       </div>
 
@@ -91,7 +100,7 @@ export default function BlogPage() {
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           />
         </div>
-        
+
         <div className="flex gap-2 w-full sm:w-auto overflow-x-auto pb-2 sm:pb-0">
           <Button
             variant={!selectedCategory ? "default" : "outline"}
@@ -100,7 +109,7 @@ export default function BlogPage() {
           >
             All
           </Button>
-          
+
           {categories.map((category) => (
             <Button
               key={category.id}
@@ -122,36 +131,42 @@ export default function BlogPage() {
       ) : blogData.contents.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {blogData.contents.map((post) => (
-            <BlogCard 
-              key={post.id} 
-              post={post} 
-              categoryName={post.category_id ? getCategoryName(post.category_id) : undefined}
+            <BlogCard
+              key={post.id}
+              post={post}
+              categoryName={
+                post.category_id ? getCategoryName(post.category_id) : undefined
+              }
             />
           ))}
         </div>
       ) : (
         <EmptyBlogState />
       )}
-      
+
       {/* Pagination */}
       {blogData.count > postsPerPage && (
         <Pagination className="my-8">
           <PaginationContent>
             <PaginationItem>
-              <PaginationPrevious 
-                href="#" 
+              <PaginationPrevious
+                href="#"
                 onClick={(e) => {
                   e.preventDefault();
                   if (currentPage > 1) setCurrentPage(currentPage - 1);
                 }}
-                className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
+                className={
+                  currentPage === 1 ? "pointer-events-none opacity-50" : ""
+                }
               />
             </PaginationItem>
-            
-            {Array.from({ length: Math.ceil(blogData.count / postsPerPage) }).map((_, i) => (
+
+            {Array.from({
+              length: Math.ceil(blogData.count / postsPerPage),
+            }).map((_, i) => (
               <PaginationItem key={i}>
-                <PaginationLink 
-                  href="#" 
+                <PaginationLink
+                  href="#"
                   onClick={(e) => {
                     e.preventDefault();
                     setCurrentPage(i + 1);
@@ -162,17 +177,21 @@ export default function BlogPage() {
                 </PaginationLink>
               </PaginationItem>
             ))}
-            
+
             <PaginationItem>
-              <PaginationNext 
-                href="#" 
+              <PaginationNext
+                href="#"
                 onClick={(e) => {
                   e.preventDefault();
                   if (currentPage < Math.ceil(blogData.count / postsPerPage)) {
                     setCurrentPage(currentPage + 1);
                   }
                 }}
-                className={currentPage >= Math.ceil(blogData.count / postsPerPage) ? "pointer-events-none opacity-50" : ""}
+                className={
+                  currentPage >= Math.ceil(blogData.count / postsPerPage)
+                    ? "pointer-events-none opacity-50"
+                    : ""
+                }
               />
             </PaginationItem>
           </PaginationContent>
@@ -192,7 +211,9 @@ function EmptyBlogState() {
       </div>
       <h2 className="text-xl font-bold mb-3">No Blog Posts Found</h2>
       <p className="text-muted-foreground max-w-md mb-8">
-        There are currently no published blog posts matching your criteria. Please check back later for new content on counseling psychology, mental health, and professional development.
+        There are currently no published blog posts matching your criteria.
+        Please check back later for new content on Thoughts, reflections and
+        insights on life, research and the evolving landscape of academia
       </p>
       <div className="flex items-center gap-2 text-red-600 dark:text-red-400 text-sm font-medium">
         <span>Check back soon</span>

@@ -414,99 +414,77 @@ export function useContent() {
     path: string
   ): Promise<string | null> => {
     setLoading(true);
+    const bucketName = "assets";
+    
     try {
-      console.log("Starting file upload to assets bucket:", { path });
-
-      // Check if the bucket exists
-      try {
-        const { data: buckets, error: bucketsError } =
-          await supabase.storage.listBuckets();
-
-        if (bucketsError) {
-          console.error("Error listing buckets:", bucketsError);
-          setError(bucketsError);
-          return null;
-        }
-
-        console.log(
-          "Available buckets:",
-          buckets.map((b) => b.name)
-        );
-
-        if (!buckets.some((b) => b.name === "assets")) {
-          const customError = new Error(
-            "Assets bucket not found. Please create it in Supabase."
-          );
-          console.error(customError);
-          setError(customError);
-          return null;
-        }
-      } catch (bucketsCheckError) {
-        console.error("Error checking buckets:", bucketsCheckError);
-      }
-
-      // Generate file name and path
+      console.log("Starting file upload to bucket:", { bucketName, path });
+      
+      // Generate a unique file name
       const fileExt = file.name.split(".").pop();
       const fileName = `${Math.random()
         .toString(36)
         .substring(2, 15)}.${fileExt}`;
-      const filePath = `${path}/${fileName}`;
+      const filePath = path.endsWith('/') ? `${path}${fileName}` : `${path}/${fileName}`;
 
       console.log("Uploading file:", {
+        bucketName,
         filePath,
         fileType: file.type,
         fileSize: file.size,
       });
 
-      // Try to upload to the media bucket as fallback if assets fails
-      let uploadResult;
-      let bucketName = "assets";
+      // First try with upsert: false
+      let uploadResult = await supabase.storage
+        .from(bucketName)
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: false
+        });
 
-      try {
+      // If file exists, try with upsert: true
+      if (uploadResult.error && uploadResult.error.message.includes('already exists')) {
+        console.log("File exists, attempting to overwrite with upsert");
         uploadResult = await supabase.storage
           .from(bucketName)
-          .upload(filePath, file);
+          .upload(filePath, file, {
+            cacheControl: '3600',
+            upsert: true
+          });
+      }
 
-        if (uploadResult.error) {
-          console.error(
-            `Error uploading to ${bucketName} bucket:`,
-            uploadResult.error
-          );
-
-          // Try media bucket as fallback
-          bucketName = "media";
-          console.log("Trying media bucket as fallback");
-
-          uploadResult = await supabase.storage
-            .from(bucketName)
-            .upload(filePath, file);
+      // Handle upload errors
+      if (uploadResult.error) {
+        console.error("Error uploading file:", uploadResult.error);
+        
+        // Check if bucket exists
+        const { data: buckets, error: bucketsError } = await supabase.storage.listBuckets();
+        
+        if (bucketsError) {
+          console.error("Error listing buckets:", bucketsError);
+          throw new Error(`Cannot access storage: ${bucketsError.message}`);
         }
-      } catch (uploadException) {
-        console.error("Exception during upload:", uploadException);
-        setError(uploadException as Error);
-        return null;
-      }
 
-      // Check final upload result
-      if (uploadResult?.error) {
-        console.error(
-          `Error uploading to ${bucketName} bucket:`,
-          uploadResult.error
-        );
-        setError(uploadResult.error);
-        return null;
+        const bucketExists = buckets.some(b => b.name === bucketName);
+        console.log("Available buckets:", buckets.map(b => b.name));
+        
+        if (!bucketExists) {
+          throw new Error(`Bucket '${bucketName}' not found. Please create it in Supabase Storage.`);
+        }
+        
+        throw uploadResult.error;
       }
-
-      console.log(`File uploaded successfully to ${bucketName} bucket`);
 
       // Get public URL
-      const { data } = supabase.storage.from(bucketName).getPublicUrl(filePath);
-
-      console.log("Generated public URL:", data.publicUrl);
-      return data.publicUrl;
+      const { data: { publicUrl } } = supabase.storage
+        .from(bucketName)
+        .getPublicUrl(filePath);
+        
+      console.log("File uploaded successfully. Public URL:", publicUrl);
+      return publicUrl;
+      
     } catch (error) {
-      console.error("Unexpected error in uploadAsset:", error);
-      setError(error as Error);
+      console.error("Error in uploadAsset:", error);
+      setError(error instanceof Error ? error : new Error(String(error)));
       return null;
     } finally {
       setLoading(false);

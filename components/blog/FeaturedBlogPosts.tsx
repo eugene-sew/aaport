@@ -61,8 +61,8 @@ export default function FeaturedBlogPosts() {
           <h3 className="text-xl font-medium mb-3">Blog Coming Soon</h3>
           <p className="text-slate-600 dark:text-slate-300 max-w-lg mx-auto">
             I'm currently preparing thoughtful content to share with you. Check
-            back soon for articles on my research, academic insights, and
-            professional reflections.
+            back soon for articles on Thoughts, reflections and insights on
+            life, research and the evolving landscape of academia
           </p>
         </div>
       </div>

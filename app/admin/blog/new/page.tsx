@@ -28,15 +28,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, Save, Eye, Upload } from "lucide-react";
 import { slugify } from "@/lib/utils";
 
-// Import Froala Editor
-import dynamic from "next/dynamic";
-import "froala-editor/css/froala_style.min.css";
-import "froala-editor/css/froala_editor.pkgd.min.css";
-
-// Dynamically import Froala Editor to prevent SSR issues
-const FroalaEditorComponent = dynamic(() => import("react-froala-wysiwyg"), {
-  ssr: false,
-});
+// Import safe client-side only Froala Editor component
+import SafeFroalaEditor from "@/components/SafeFroalaEditor";
 
 export default function NewBlogPage() {
   const router = useRouter();
@@ -63,70 +56,6 @@ export default function NewBlogPage() {
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [activeTab, setActiveTab] = useState("editor");
-
-  // Froala editor options
-  const editorConfig = {
-    placeholderText: "Start writing your blog post...",
-    charCounterCount: true,
-    toolbarButtons: {
-      moreText: {
-        buttons: [
-          "bold",
-          "italic",
-          "underline",
-          "strikeThrough",
-          "subscript",
-          "superscript",
-          "fontFamily",
-          "fontSize",
-          "textColor",
-          "backgroundColor",
-          "clearFormatting",
-        ],
-      },
-      moreParagraph: {
-        buttons: [
-          "alignLeft",
-          "alignCenter",
-          "alignRight",
-          "alignJustify",
-          "formatOL",
-          "formatUL",
-          "paragraphFormat",
-          "lineHeight",
-          "outdent",
-          "indent",
-          "quote",
-        ],
-      },
-      moreRich: {
-        buttons: [
-          "insertLink",
-          "insertImage",
-          "insertTable",
-          "insertHR",
-          "emoticons",
-          "specialCharacters",
-          "insertVideo",
-          "embedly",
-        ],
-      },
-      moreMisc: {
-        buttons: ["undo", "redo", "fullscreen", "selectAll", "html", "help"],
-        align: "right",
-        buttonsVisible: 2,
-      },
-    },
-    events: {
-      "image.beforeUpload": function (images: any) {
-        // Return false to stop default upload
-        return false;
-      },
-      "image.inserted": function (image: any) {
-        // Handle image insertion
-      },
-    },
-  };
 
   // Handle image upload for Froala
   const handleImageUpload = async (file: File): Promise<string> => {
@@ -327,11 +256,9 @@ export default function NewBlogPage() {
                     <TabsTrigger value="preview">Preview</TabsTrigger>
                   </TabsList>
                   <TabsContent value="editor" className="border rounded-md p-4">
-                    <FroalaEditorComponent
-                      tag="textarea"
-                      config={editorConfig}
-                      model={content}
-                      onModelChange={handleContentChange}
+                    <SafeFroalaEditor
+                      content={content}
+                      onContentChange={handleContentChange}
                     />
                   </TabsContent>
                   <TabsContent

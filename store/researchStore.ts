@@ -30,6 +30,9 @@ export interface ResearchWork {
   published_at?: string;
   meta_description?: string;
   tags?: string[];
+  link_url?: string;
+  is_recent?: boolean;
+  is_featured?: boolean;
 }
 
 interface ResearchState {

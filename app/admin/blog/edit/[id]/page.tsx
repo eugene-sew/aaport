@@ -28,8 +28,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, Save, Eye, Upload } from "lucide-react";
 import { slugify } from "@/lib/utils";
 
-// Import our custom Froala Editor client component
-import FroalaEditor from "@/components/FroalaEditor";
+// Import safe client-side only Froala Editor component
+import SafeFroalaEditor from "@/components/SafeFroalaEditor";
 
 // This component doesn't use params directly to avoid Next.js warnings
 export default function EditBlogPage() {
@@ -443,7 +443,7 @@ export default function EditBlogPage() {
                     <TabsTrigger value="preview">Preview</TabsTrigger>
                   </TabsList>
                   <TabsContent value="editor" className="border rounded-md p-4">
-                    <FroalaEditor
+                    <SafeFroalaEditor
                       content={content || ""}
                       onContentChange={handleContentChange}
                     />

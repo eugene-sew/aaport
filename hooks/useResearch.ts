@@ -257,11 +257,19 @@ export function useResearch() {
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-|-$/g, "");
 
+      // Set default values for new fields if not provided
+      const workWithDefaults = {
+        ...researchWork,
+        is_recent: researchWork.is_recent !== undefined ? researchWork.is_recent : false,
+        is_featured: researchWork.is_featured !== undefined ? researchWork.is_featured : false,
+        link_url: researchWork.link_url || null,
+      };
+
       const { data, error } = await supabase
         .from("research_works")
         .insert([
           {
-            ...researchWork,
+            ...workWithDefaults,
             slug,
             author_id: user.id,
           },
@@ -296,6 +304,15 @@ export function useResearch() {
           .toLowerCase()
           .replace(/[^a-z0-9]+/g, "-")
           .replace(/^-|-$/g, "");
+      }
+      
+      // Ensure boolean fields are properly set
+      if (updateData.is_recent !== undefined) {
+        updateData.is_recent = Boolean(updateData.is_recent);
+      }
+      
+      if (updateData.is_featured !== undefined) {
+        updateData.is_featured = Boolean(updateData.is_featured);
       }
 
       const { data, error } = await supabase

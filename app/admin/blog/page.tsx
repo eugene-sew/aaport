@@ -43,56 +43,61 @@ import { format } from "date-fns";
 export default function BlogPage() {
   const router = useRouter();
   const { useContents, useCategories, useDeleteContent } = useContentQueries();
-  
+
   // State for filtering and pagination
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [statusFilter, setStatusFilter] = useState<"all" | "published" | "draft">("all");
+  const [statusFilter, setStatusFilter] = useState<
+    "all" | "published" | "draft"
+  >("all");
   const postsPerPage = 10;
-  
+
   // Use TanStack Query for data fetching with automatic caching
-  const { 
-    data: contentData = { contents: [], count: 0 }, 
-    isLoading: contentsLoading, 
-    error: contentsError 
+  const {
+    data: contentData = { contents: [], count: 0 },
+    isLoading: contentsLoading,
+    error: contentsError,
   } = useContents();
-  
+
   const { contents } = contentData;
-  
-  const { 
-    data: categories = [], 
-    isLoading: categoriesLoading 
-  } = useCategories();
-  
+
+  const { data: categories = [], isLoading: categoriesLoading } =
+    useCategories();
+
   // Delete mutation
-  const { mutate: deleteContentMutation, isPending: isDeleting } = useDeleteContent();
+  const { mutate: deleteContentMutation, isPending: isDeleting } =
+    useDeleteContent();
   const [isDataFetching, setIsDataFetching] = useState(false);
 
   // Create a categoriesMap for easy lookup
-  const categoriesMap = categories.reduce((acc: Record<number, string>, category: any) => {
-    acc[category.id] = category.name;
-    return acc;
-  }, {});
+  const categoriesMap = categories.reduce(
+    (acc: Record<number, string>, category: any) => {
+      acc[category.id] = category.name;
+      return acc;
+    },
+    {}
+  );
 
   // Filter posts by search term and status
   const filteredPosts = contents?.filter((post: Content) => {
     // Filter by search term
-    const matchesSearch = searchTerm === "" || 
-      post.title?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    const matchesSearch =
+      searchTerm === "" ||
+      post.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       post.content?.toLowerCase().includes(searchTerm.toLowerCase());
-    
+
     // Filter by status
-    const matchesStatus = 
-      statusFilter === "all" || 
-      post.status === statusFilter;
-    
+    const matchesStatus =
+      statusFilter === "all" || post.status === statusFilter;
+
     return matchesSearch && matchesStatus;
   });
 
   // Pagination
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = filteredPosts?.slice(indexOfFirstPost, indexOfLastPost) || [];
+  const currentPosts =
+    filteredPosts?.slice(indexOfFirstPost, indexOfLastPost) || [];
   const totalPages = Math.ceil((filteredPosts?.length || 0) / postsPerPage);
 
   // Loading state
@@ -103,12 +108,14 @@ export default function BlogPage() {
       </div>
     );
   }
-  
+
   // Error state
   if (contentsError) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="text-red-500">Error loading content: {(contentsError as Error).message}</div>
+        <div className="text-red-500">
+          Error loading content: {(contentsError as Error).message}
+        </div>
       </div>
     );
   }
@@ -132,7 +139,7 @@ export default function BlogPage() {
     <div className="container mx-auto py-8">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-3xl font-bold">Blog Management</h1>
-        <Button onClick={() => router.push('/admin/blog/add')}>
+        <Button onClick={() => router.push("/admin/blog/new")}>
           <Plus className="mr-2 h-4 w-4" /> Add New
         </Button>
       </div>
@@ -143,7 +150,13 @@ export default function BlogPage() {
       </div>
 
       <div className="flex flex-col sm:flex-row gap-4 justify-between items-center">
-        <form onSubmit={(e) => { e.preventDefault(); handleSearch(); }} className="flex w-full sm:w-auto gap-2">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSearch();
+          }}
+          className="flex w-full sm:w-auto gap-2"
+        >
           <div className="relative w-full sm:w-80">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
             <Input
@@ -221,7 +234,8 @@ export default function BlogPage() {
                     </TableCell>
                     <TableCell>
                       <Badge variant="outline" className="ml-2">
-                        {categoriesMap[content.category_id as number] || "Uncategorized"}
+                        {categoriesMap[content.category_id as number] ||
+                          "Uncategorized"}
                       </Badge>
                     </TableCell>
                     <TableCell>
@@ -276,7 +290,9 @@ export default function BlogPage() {
                 <PaginationItem>
                   <PaginationPrevious
                     onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                    className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
+                    className={
+                      currentPage === 1 ? "pointer-events-none opacity-50" : ""
+                    }
                   />
                 </PaginationItem>
 
@@ -297,7 +313,7 @@ export default function BlogPage() {
                     // In the middle
                     pageNum = currentPage - 2 + i;
                   }
-                  
+
                   return (
                     <PaginationItem key={pageNum}>
                       <PaginationLink
