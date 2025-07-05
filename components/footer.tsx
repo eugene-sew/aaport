@@ -4,7 +4,7 @@ import type React from "react";
 
 import { useState } from "react";
 import Link from "next/link";
-import { Facebook, Twitter, Linkedin, Mail } from "lucide-react";
+import { Facebook, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
@@ -60,28 +60,25 @@ export default function Footer() {
             </p>
             <div className="flex space-x-4">
               <Link
-                href="https://facebook.com"
+                href="https://facebook.com/asmauayub"
                 className="text-muted-foreground hover:text-red-600"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Facebook className="h-5 w-5" />
                 <span className="sr-only">Facebook</span>
               </Link>
               <Link
-                href="https://twitter.com"
+                href="https://www.linkedin.com/in/asmau-ayub-mphil-lcp-93a3a519/"
                 className="text-muted-foreground hover:text-red-600"
-              >
-                <Twitter className="h-5 w-5" />
-                <span className="sr-only">Twitter</span>
-              </Link>
-              <Link
-                href="https://linkedin.com"
-                className="text-muted-foreground hover:text-red-600"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Linkedin className="h-5 w-5" />
                 <span className="sr-only">LinkedIn</span>
               </Link>
               <Link
-                href="mailto:contact@asmauayub.com"
+                href="mailto:engagewithasmaa@gmail.com"
                 className="text-muted-foreground hover:text-red-600"
               >
                 <Mail className="h-5 w-5" />
@@ -111,6 +108,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  href="/about/counseling"
+                  className="text-muted-foreground hover:text-red-600"
+                >
+                  Counseling
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/blog"
                   className="text-muted-foreground hover:text-red-600"
                 >
@@ -133,8 +138,10 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
-                  href="https://scholar.google.com"
+                  href="https://scholar.google.com/citations?user=WDZpVz0AAAAJ&hl=en"
                   className="text-muted-foreground hover:text-red-600"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   Google Scholar
                 </Link>

@@ -112,226 +112,45 @@ export default function TeachingPage() {
               <h1 className="mb-6 text-4xl font-bold tracking-tight md:text-5xl">
                 Teaching
               </h1>
-              <p className="mb-4 text-lg text-muted-foreground">
-                As a dedicated instructor at Michigan State University, Asmau is
-                passionate about imparting knowledge in the field of
-                Rehabilitation Counseling.
-              </p>
-              <p className="mb-6 text-muted-foreground">
-                Her teaching philosophy emphasizes student engagement, critical
-                thinking, and practical application of counseling theories to
-                real-world scenarios.
-              </p>
-              <Button asChild className="bg-red-600 hover:bg-red-700">
+              <div className="space-y-4 text-muted-foreground">
+                <p>
+                  As a dedicated instructor at Michigan State University, Asmau
+                  is passionate about imparting knowledge in the field of
+                  Rehabilitation Counseling:
+                </p>
+                <ul className="space-y-2">
+                  <li>
+                    She independently develops and teaches multiple sections of
+                    Substance Abuse courses, integrating comprehensive syllabi
+                    and engaging teaching methodologies.
+                  </li>
+                  <li>
+                    Graduate-Level Instruction: Asmau has experience as a
+                    teaching assistant at the master’s class level and
+                    undergraduate levels, and in summer programs, where she
+                    supports international teaching assistants in acclimating to
+                    academic expectations.
+                  </li>
+                </ul>
+                <p>
+                  Her teaching philosophy emphasizes student engagement,
+                  critical thinking, and practical application of counseling
+                  theories to real-world scenarios.
+                </p>
+              </div>
+              <Button asChild className="mt-6 bg-red-600 hover:bg-red-700">
                 <Link href="/contact">Contact for Collaborations</Link>
               </Button>
             </div>
             <div className="order-1 flex justify-center md:order-2">
               <div className="relative h-72 w-full rounded-2xl overflow-hidden md:h-96">
                 <Image
-                  src="/teach_full.png"
+                  src="/lecture.png"
                   alt="Asmau teaching"
                   fill
                   className="object-cover"
                   priority
                 />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Teaching Philosophy */}
-      <section className="py-12 md:py-16">
-        <div className="container">
-          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
-            Teaching Philosophy
-          </h2>
-          <div className="grid gap-8 md:grid-cols-2">
-            {teachingPhilosophy.map((item, index) => (
-              <Card
-                key={index}
-                className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md"
-              >
-                <CardHeader className="pb-2">
-                  <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300 w-fit">
-                    {item.icon}
-                  </div>
-                  <CardTitle>{item.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-base">
-                    {item.description}
-                  </CardDescription>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Teaching Experience */}
-      <section className="bg-muted py-16 md:py-24">
-        <div className="container">
-          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
-            Teaching Experience
-          </h2>
-          <div className="grid gap-8 md:grid-cols-3">
-            <Card className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
-              <div className="relative h-48 w-full">
-                <Image
-                  src="/suba.jpg"
-                  alt="Substance Abuse Counseling"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <CardHeader className="pb-2">
-                <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300 w-fit">
-                  <BookMarked className="h-6 w-6" />
-                </div>
-                <CardTitle>Independent Instruction</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Asmau independently develops and teaches multiple sections of
-                  Substance Abuse courses, integrating comprehensive syllabi and
-                  engaging teaching methodologies.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
-              <div className="relative h-48 w-full">
-                <Image
-                  src="/grad.jpg"
-                  alt="Graduate Level Teaching"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <CardHeader className="pb-2">
-                <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300 w-fit">
-                  <GraduationCap className="h-6 w-6" />
-                </div>
-                <CardTitle>Graduate-Level Instruction</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Asmau has experience as a teaching assistant at the master's
-                  class level and undergraduate levels, providing instructional
-                  support and mentorship to developing counselors.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md">
-              <div className="relative h-48 w-full">
-                <Image
-                  src="/bg.png"
-                  alt="International Teaching"
-                  fill
-                  className="object-cover object-top"
-                />
-              </div>
-              <CardHeader className="pb-2">
-                <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300 w-fit">
-                  <FlaskConical className="h-6 w-6" />
-                </div>
-                <CardTitle>International Programs</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  In summer programs, Asmau supports international teaching
-                  assistants in acclimating to academic expectations, enhancing
-                  cross-cultural teaching competencies.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Courses */}
-      <section className="py-16 md:py-24">
-        <div className="container">
-          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
-            Courses Taught
-          </h2>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {courses.map((course) => (
-              <Card
-                key={course.id}
-                className="overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-md"
-              >
-                <CardHeader>
-                  <div className="mb-2 flex items-center gap-2">
-                    <span className="rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-600 dark:bg-red-950 dark:text-red-300">
-                      {course.code}
-                    </span>
-                    <span className="rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-600 dark:bg-red-950 dark:text-red-300">
-                      {course.level}
-                    </span>
-                  </div>
-                  <CardTitle>{course.title}</CardTitle>
-                  <CardDescription>{course.institution}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="mb-4 text-muted-foreground">
-                    {course.description}
-                  </p>
-                  <div className="rounded-lg bg-background p-4">
-                    <h4 className="mb-2 font-medium">Key Topics:</h4>
-                    <ul className="ml-6 list-disc space-y-1 text-muted-foreground">
-                      {course.topics.map((topic, index) => (
-                        <li key={index}>{topic}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Teaching Approach Highlights */}
-      <section className="bg-muted py-16 md:py-24">
-        <div className="container">
-          <div className="grid gap-12 md:grid-cols-2 md:items-center">
-            <div className="relative aspect-video overflow-hidden rounded-2xl">
-              <Image
-                src="/abs.jpg"
-                alt="Teaching Approach"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div>
-              <h2 className="mb-6 text-3xl font-bold tracking-tight md:text-4xl">
-                Instructional Approach
-              </h2>
-              <div className="space-y-4 text-muted-foreground">
-                <p>
-                  Asmau designs her courses with a focus on experiential
-                  learning and evidence-based practices. Her teaching
-                  methodologies include interactive lectures, case-based
-                  learning, small group discussions, and reflective practice
-                  exercises.
-                </p>
-                <p>
-                  In substance abuse counseling courses, she integrates current
-                  research and clinical perspectives, bringing real-world
-                  scenarios into the classroom to prepare students for the
-                  complexities of addiction treatment.
-                </p>
-                <p>
-                  Assessment strategies are designed to evaluate both
-                  theoretical knowledge and applied skills, with opportunities
-                  for students to demonstrate competence through simulated
-                  counseling sessions, case conceptualizations, and
-                  research-informed treatment planning.
-                </p>
               </div>
             </div>
           </div>

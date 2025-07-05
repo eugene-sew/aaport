@@ -63,3 +63,24 @@
     @apply bg-background text-foreground;
   }
 }
+
+div[style="z-index: 9999;width: 100%;position: relative;"] {
+  opacity: 0 !important;
+  content: "" !important;
+  display: none !important;
+}
+div[style="z-index:9999;width:100%;position:relative"] {
+  opacity: 0 !important;
+  content: "" !important;
+  display: none !important;
+}
+div[style="z-index:9999;width:100%;position:relative;"] {
+  opacity: 0 !important;
+  content: "" !important;
+  display: none !important;
+}
+div[style="z-index: 9999; width: 100%; position: relative;"] {
+  opacity: 0 !important;
+  content: "" !important;
+  display: none !important;
+}

@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import { Heart, Users, Globe } from "lucide-react";
@@ -10,50 +11,69 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-// Community service data
-const communityProjects = [
-  {
-    id: 1,
-    title: "Mental Health Education Programs",
-    role: "Founder & Executive Director",
-    organization: "Rayuwa Foundation",
-    description:
-      "Lead mental health education and awareness programs targeting marginalized groups in Ghana, providing resources and support for vulnerable populations.",
-    image:
-      "/placeholder.svg?height=250&width=500&text=Mental%20Health%20Education",
-  },
-  {
-    id: 2,
-    title: "Women & Children Support Initiative",
-    role: "Program Coordinator",
-    organization: "Rayuwa Foundation",
-    description:
-      "Organize outreach programs focusing on supporting women and children affected by domestic violence through mental health resources and educational empowerment.",
-    image:
-      "/placeholder.svg?height=250&width=500&text=Women%20Support%20Initiative",
-  },
-  {
-    id: 3,
-    title: "Campus Mental Health Advocacy",
-    role: "Student Leader",
-    organization: "Campus RSOs",
-    description:
-      "Lead student initiatives promoting mental health awareness and education within the campus community, organizing workshops and support groups.",
-    image: "/placeholder.svg?height=250&width=500&text=Campus%20Advocacy",
-  },
-  {
-    id: 4,
-    title: "Educational Support for Underserved Communities",
-    role: "Project Lead",
-    organization: "Rayuwa Foundation",
-    description:
-      "Develop and implement educational support programs for underserved communities in Ghana, focusing on access to resources and learning opportunities.",
-    image: "/placeholder.svg?height=250&width=500&text=Educational%20Support",
-  },
-];
+import { useEffect, useState } from "react";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import type { CommunityProject } from "@/types/community-service";
+
+// Simplified type for public view of community projects
+type PublicCommunityProject = {
+  id: string;
+  title: string;
+  role_played_as: string;
+  organization: string | null;
+  description: string | null;
+  image_url: string | null;
+};
+
+// Fetch community projects from Supabase
+function usePublicCommunityProjects() {
+  const [projects, setProjects] = useState<PublicCommunityProject[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const supabase = createClientComponentClient();
+        setLoading(true);
+
+        const { data, error } = await supabase
+          .from("community_projects")
+          .select(
+            "id, title, role_played_as, organization, description, image_url"
+          )
+          .order("created_at", { ascending: false });
+
+        if (error) throw error;
+
+        setProjects(data || []);
+      } catch (err) {
+        console.error("Error fetching projects:", err);
+        setError(
+          err instanceof Error ? err.message : "Failed to load projects"
+        );
+        setProjects([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
+  return { projects, loading, error };
+}
+
+// Define type for gallery images
+type GalleryImage = {
+  id: number;
+  src: string;
+  alt: string;
+  className?: string;
+};
 
 // Gallery images
-const galleryImages = [
+const galleryImages: GalleryImage[] = [
   {
     id: 1,
     src: "/teach_full.png",
@@ -64,7 +84,7 @@ const galleryImages = [
     id: 2,
     src: "/ru.jpg",
     alt: "Mental health workshop in session",
-    className: "col-span-1 row-span-1",
+    className: "md:col-span-1",
   },
   {
     id: 3,
@@ -74,27 +94,33 @@ const galleryImages = [
   },
   {
     id: 4,
-    src: "/mentorship pic.jpg",
-    alt: "Women's empowerment session",
-    className: "col-span-1 row-span-2",
+    src: "/placeholder.svg",
+    alt: "Community health awareness campaign",
+    className: "col-span-1 row-span-1",
   },
   {
     id: 5,
-    src: "/pro_l.jpg",
-    alt: "Foundation team planning meeting",
+    src: "/placeholder.svg",
+    alt: "Youth mentorship program",
     className: "col-span-1 row-span-1",
   },
   {
     id: 6,
-    src: "/mentorship pic.jpg",
-    alt: "Educational resource distribution",
+    src: "/placeholder.svg",
+    alt: "Community leadership training",
     className: "col-span-1 row-span-1",
   },
   {
     id: 7,
-    src: "/bg.png",
+    src: "/placeholder.svg",
     alt: "Educational resource distribution",
     className: "col-span-2 row-span-1",
+  },
+  {
+    id: 8,
+    src: "/placeholder.svg",
+    alt: "Community gathering",
+    className: "col-span-1 row-span-1",
   },
 ];
 
@@ -161,7 +187,8 @@ export default function CommunityServicePage() {
                 <CardDescription className="text-base">
                   Organizing mental health education and awareness programs for
                   vulnerable populations, providing resources and support to
-                  those in need.
+                  those in need and training peer counselors who provide mental
+                  health first aid response to their peers.
                 </CardDescription>
               </CardContent>
             </Card>
@@ -171,13 +198,14 @@ export default function CommunityServicePage() {
                 <div className="mb-2 rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-950 dark:text-red-300 w-fit">
                   <Users className="h-6 w-6" />
                 </div>
-                <CardTitle>Women & Children Support</CardTitle>
+                <CardTitle>Child Protection</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-base">
-                  Supporting women and children affected by domestic violence
-                  through outreach programs, educational empowerment, and mental
-                  health resources.
+                  Providing preventive training measures and supporting women
+                  and children affected by domestic violence through outreach
+                  programs, educational empowerment, and mental health
+                  resources.
                 </CardDescription>
               </CardContent>
             </Card>
@@ -206,37 +234,65 @@ export default function CommunityServicePage() {
             Community Projects
           </h2>
           <div className="grid gap-8">
-            {communityProjects.map((project) => (
-              <Card key={project.id} className="overflow-hidden rounded-2xl">
-                <div className="grid md:grid-cols-3">
-                  <div className="aspect-video md:aspect-auto md:h-full">
-                    <Image
-                      src={project.image || "/placeholder.svg"}
-                      alt={project.title}
-                      width={500}
-                      height={300}
-                      className="h-full w-full object-cover"
-                    />
+            {(() => {
+              const { projects, loading, error } = usePublicCommunityProjects();
+              if (loading) {
+                return (
+                  <div className="text-center py-12 text-lg text-muted-foreground">
+                    Loading projects…
                   </div>
-                  <div className="md:col-span-2">
-                    <CardHeader>
-                      <div className="mb-1 flex flex-wrap items-center gap-2">
-                        <span className="rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-600 dark:bg-red-950 dark:text-red-300">
-                          {project.organization}
-                        </span>
-                      </div>
-                      <CardTitle>{project.title}</CardTitle>
-                      <CardDescription>{project.role}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-muted-foreground">
-                        {project.description}
-                      </p>
-                    </CardContent>
+                );
+              }
+              if (error) {
+                return (
+                  <div className="text-center py-12 text-destructive">
+                    Failed to load projects: {error}
                   </div>
-                </div>
-              </Card>
-            ))}
+                );
+              }
+              if (!projects.length) {
+                return (
+                  <div className="text-center py-12 text-muted-foreground">
+                    No community projects found.
+                  </div>
+                );
+              }
+              return projects.map((project) => (
+                <Card key={project.id} className="overflow-hidden rounded-2xl">
+                  <div className="grid md:grid-cols-3">
+                    <div className="aspect-video md:aspect-auto md:h-full">
+                      <Image
+                        src={project.image_url || "/placeholder.svg"}
+                        alt={project.title}
+                        width={500}
+                        height={300}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                    <div className="md:col-span-2">
+                      <CardHeader>
+                        <div className="mb-1 flex flex-wrap items-center gap-2">
+                          {project.organization && (
+                            <span className="rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-600 dark:bg-red-950 dark:text-red-300">
+                              {project.organization}
+                            </span>
+                          )}
+                        </div>
+                        <CardTitle>{project.title}</CardTitle>
+                        <CardDescription>
+                          {project.role_played_as}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-muted-foreground">
+                          {project.description}
+                        </p>
+                      </CardContent>
+                    </div>
+                  </div>
+                </Card>
+              ));
+            })()}
           </div>
         </section>
 

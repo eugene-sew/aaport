@@ -3,7 +3,7 @@
 import type React from "react";
 
 import { useState } from "react";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -16,15 +16,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
+import { ContactMessageInput } from "@/hooks/useContact";
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ContactMessageInput>({
     name: "",
     email: "",
     subject: "",
     message: "",
   });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -48,21 +51,48 @@ export default function ContactPage() {
     setIsSubmitting(true);
 
     try {
-      // This would be replaced with actual Supabase integration
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      toast({
-        title: "Message Sent",
-        description: "Thank you for your message. I'll get back to you soon!",
+      // Submit the contact message using our API endpoint
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
 
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-      });
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        toast({
+          title: "Message Sent",
+          description: data.message,
+        });
+
+        // Reset form data on success
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        });
+
+        // Show success state
+        setIsSuccess(true);
+
+        // Reset success state after 5 seconds
+        setTimeout(() => {
+          setIsSuccess(false);
+        }, 5000);
+      } else {
+        toast({
+          title: "Error",
+          description:
+            data.message || "Failed to send message. Please try again later.",
+          variant: "destructive",
+        });
+      }
     } catch (error) {
+      console.error("Error submitting contact form:", error);
       toast({
         title: "Error",
         description: "Failed to send message. Please try again later.",
@@ -79,11 +109,28 @@ export default function ContactPage() {
         <h1 className="text-4xl font-bold tracking-tight md:text-5xl">
           Contact Me
         </h1>
-        <p className="mx-auto max-w-2xl text-muted-foreground">
-          Have a question or want to discuss a potential collaboration? Feel
-          free to reach out using the form below or through my contact
-          information.
+        <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+          Get in touch with me for collaborations, questions, or just to say
+          hello.
         </p>
+
+        {isSuccess && (
+          <div className="mt-6 mx-auto max-w-md animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center gap-3">
+              <div className="bg-green-100 p-2 rounded-full">
+                <CheckCircle className="h-6 w-6 text-green-600" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-medium text-green-800">
+                  Message sent successfully!
+                </h3>
+                <p className="text-green-700 text-sm">
+                  Thank you for reaching out. I'll get back to you soon.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
@@ -150,23 +197,33 @@ export default function ContactPage() {
                   required
                 />
               </div>
-              <Button
-                type="submit"
-                className="w-full bg-red-600 hover:bg-red-700"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <>
-                    <Send className="mr-2 h-4 w-4 animate-spin" />
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    <Send className="mr-2 h-4 w-4" />
-                    Send Message
-                  </>
-                )}
-              </Button>
+              <div className="grid gap-4">
+                <Button
+                  disabled={isSubmitting || isSuccess}
+                  className={`w-full transition-all duration-300 ${
+                    isSuccess
+                      ? "bg-green-600 hover:bg-green-700"
+                      : "bg-red-600 hover:bg-red-700"
+                  }`}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-background border-t-transparent" />
+                      Sending...
+                    </>
+                  ) : isSuccess ? (
+                    <>
+                      <CheckCircle className="mr-2 h-4 w-4" />
+                      Message Sent
+                    </>
+                  ) : (
+                    <>
+                      <Send className="mr-2 h-4 w-4" />
+                      Send Message
+                    </>
+                  )}
+                </Button>
+              </div>
             </form>
           </CardContent>
         </Card>
@@ -182,10 +239,10 @@ export default function ContactPage() {
                 <div>
                   <p className="font-medium">Email</p>
                   <a
-                    href="mailto:contact@asmauayub.com"
+                    href="mailto:engagewithasmaa@gmail.com"
                     className="text-sm text-muted-foreground hover:text-red-600"
                   >
-                    contact@asmauayub.com
+                    engagewithasmaa@gmail.com
                   </a>
                 </div>
               </div>
@@ -197,7 +254,7 @@ export default function ContactPage() {
                     href="tel:+1234567890"
                     className="text-sm text-muted-foreground hover:text-red-600"
                   >
-                    (123) 456-7890
+                    (810) 288-6822
                   </a>
                 </div>
               </div>
@@ -209,6 +266,9 @@ export default function ContactPage() {
                     Michigan State University
                     <br />
                     College of Education
+                    <br />
+                    Department of Counseling, Educational Psychology and Special
+                    Education
                     <br />
                     East Lansing, MI 48824
                   </p>

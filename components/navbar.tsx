@@ -25,22 +25,21 @@ const navItems: NavItem[] = [
   {
     title: "About",
     href: "/about",
-    subItems: [{ title: "Counseling", href: "/about#counseling" }],
   },
   {
     title: "Research",
     href: "/research",
     subItems: [
-      { title: "Book Chapters", href: "/research#book-chapters" },
-      { title: "Articles", href: "/research#articles" },
-      { title: "Books", href: "/research#books" },
+      { title: "Book Publications", href: "/research#book-chapters" },
+      { title: "Article Publications", href: "/research#articles" },
       {
-        title: "Conference Presentations",
+        title: "Academic Presentations",
         href: "/research#conference-presentations",
       },
     ],
   },
   { title: "Teaching", href: "/teaching" },
+  { title: "Counseling", href: "/about/counseling" },
   {
     title: "Professional Leadership",
     href: "/professional-leadership",
@@ -55,10 +54,10 @@ const navItems: NavItem[] = [
   {
     title: "Blog",
     href: "/blog",
-    subItems: [
-      { title: "Diaries", href: "/blog/diaries" },
-      { title: "Quotes", href: "/blog/quotes" },
-    ],
+    // subItems: [
+    //   { title: "Diaries", href: "/blog/diaries" },
+    //   { title: "Quotes", href: "/blog/quotes" },
+    // ],
   },
   {
     title: "Contact",

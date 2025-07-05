@@ -105,17 +105,10 @@ export default function ResearchSection() {
               <p className="mb-4">
                 This research investigates the intersection of ethnicity,
                 disability, and cultural narratives in shaping the experiences
-                of autistic students in Ghana.
-              </p>
-              <p className="mb-4">
-                It aims to explore how autistic individuals navigate issues of
-                identity, stigma, and social belonging within the complexities
-                of Ghana's cultural and ethnic landscape.
-              </p>
-            </div>
-            <div className="text-center mt-8">
-              <p className="text-lg font-medium">
-                Year: <span className="text-slate-100">2024</span>
+                of autistic students in Ghana. It aims to explore how autistic
+                individuals navigate issues of identity, stigma, and social
+                belonging within the complexities of Ghana's cultural and ethnic
+                landscape.
               </p>
             </div>
           </div>
