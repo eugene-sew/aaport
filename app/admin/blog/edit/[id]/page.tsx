@@ -28,8 +28,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, Save, Eye, Upload } from "lucide-react";
 import { slugify } from "@/lib/utils";
 
-// Import safe client-side only Froala Editor component
-import SafeFroalaEditor from "@/components/SafeFroalaEditor";
+// Import the new robust Froala Editor component
+import FroalaEditorWrapper from "@/components/editor/FroalaEditorWrapper";
 
 // This component doesn't use params directly to avoid Next.js warnings
 export default function EditBlogPage() {
@@ -64,155 +64,6 @@ export default function EditBlogPage() {
   const [activeTab, setActiveTab] = useState("editor");
   const [status, setStatus] = useState<"draft" | "published">("draft");
   const [originalPost, setOriginalPost] = useState<Content | null>(null);
-
-  // Froala editor options
-  const editorConfig: any = {
-    placeholderText: "Start writing your blog post...",
-    charCounterCount: true,
-    toolbarButtons: {
-      moreText: {
-        buttons: [
-          "bold",
-          "italic",
-          "underline",
-          "strikeThrough",
-          "subscript",
-          "superscript",
-          "fontFamily",
-          "fontSize",
-          "textColor",
-          "backgroundColor",
-          "clearFormatting",
-        ],
-      },
-      moreParagraph: {
-        buttons: [
-          "alignLeft",
-          "alignCenter",
-          "alignRight",
-          "alignJustify",
-          "formatOL",
-          "formatUL",
-          "paragraphFormat",
-          "lineHeight",
-          "outdent",
-          "indent",
-          "quote",
-        ],
-      },
-      moreRich: {
-        buttons: [
-          "insertLink",
-          "insertImage",
-          "insertTable",
-          "insertHR",
-          "emoticons",
-          "specialCharacters",
-          "insertVideo",
-          "embedly",
-        ],
-      },
-      moreMisc: {
-        buttons: ["undo", "redo", "fullscreen", "selectAll", "html", "help"],
-        align: "right",
-        buttonsVisible: 2,
-      },
-    },
-    events: {
-      "image.beforeUpload": function (images: any) {
-        // Return false to stop default upload
-        return false;
-      },
-      "image.inserted": function (image: any) {
-        // Handle image insertion
-      },
-    },
-  };
-
-  // Handle image upload for Froala
-  const handleImageUpload = async (file: File): Promise<string> => {
-    try {
-      const imageUrl = await uploadAsset(file, "blog");
-      return imageUrl || "";
-    } catch (error) {
-      console.error("Error uploading image:", error);
-      return "";
-    }
-  };
-
-  // Merge additional Froala editor configuration
-  // We're extending the base config with these additional options
-  Object.assign(editorConfig, {
-    placeholderText: "Start writing your blog post...",
-    charCounterCount: true,
-    toolbarButtons: {
-      moreText: {
-        buttons: [
-          "bold",
-          "italic",
-          "underline",
-          "strikeThrough",
-          "subscript",
-          "superscript",
-          "fontFamily",
-          "fontSize",
-          "textColor",
-          "backgroundColor",
-          "clearFormatting",
-        ],
-      },
-      moreParagraph: {
-        buttons: [
-          "alignLeft",
-          "alignCenter",
-          "alignRight",
-          "alignJustify",
-          "formatOL",
-          "formatUL",
-          "paragraphFormat",
-          "lineHeight",
-          "outdent",
-          "indent",
-          "quote",
-        ],
-      },
-      moreRich: {
-        buttons: [
-          "insertLink",
-          "insertImage",
-          "insertTable",
-          "emoticons",
-          "specialCharacters",
-          "insertHR",
-        ],
-      },
-      moreMisc: {
-        buttons: ["undo", "redo", "fullscreen", "html"],
-        align: "right",
-        buttonsVisible: 2,
-      },
-    },
-    events: {
-      "image.beforeUpload": function (images: File[]) {
-        return false; // Stop default upload
-      },
-      "image.uploaded": function (response: any) {
-        return response;
-      },
-      "image.inserted": function (img: HTMLImageElement) {
-        // Do something after image is inserted
-      },
-      "image.error": function (error: any) {
-        console.error("Froala image error:", error);
-      },
-    },
-    imageUploadParam: "file",
-    imageUploadURL: false,
-    imageUploadMethod: "POST",
-    imageUploadParams: {},
-    imageUploadToS3: false,
-    imageAllowedTypes: ["jpeg", "jpg", "png", "gif", "webp"],
-  });
 
   // Get the post ID from the URL when the component mounts
   useEffect(() => {
@@ -443,9 +294,9 @@ export default function EditBlogPage() {
                     <TabsTrigger value="preview">Preview</TabsTrigger>
                   </TabsList>
                   <TabsContent value="editor" className="border rounded-md p-4">
-                    <SafeFroalaEditor
-                      content={content || ""}
-                      onContentChange={handleContentChange}
+                    <FroalaEditorWrapper
+                      model={content || ""}
+                      onModelChange={handleContentChange}
                     />
                   </TabsContent>
                   <TabsContent
