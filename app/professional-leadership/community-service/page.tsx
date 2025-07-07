@@ -265,8 +265,8 @@ export default function CommunityServicePage() {
                         src={project.image_url || "/placeholder.svg"}
                         alt={project.title}
                         width={500}
-                        height={300}
-                        className="h-full w-full object-cover"
+                        height={200}
+                        className="max-h-[250px] w-full object-cover"
                       />
                     </div>
                     <div className="md:col-span-2">

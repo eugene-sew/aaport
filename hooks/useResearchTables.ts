@@ -53,6 +53,7 @@ export interface ResearchPresentation {
   presenters: string;
   year: number;
   presentation_type: string;
+  conference_name?: string;
   venue?: string;
   location?: string;
   date?: string;
