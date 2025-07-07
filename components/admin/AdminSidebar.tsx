@@ -111,7 +111,7 @@ const AdminSidebar = () => {
   ];
 
   return (
-    <div className="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 h-screen flex-shrink-0">
+    <div className="w-72 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 h-screen flex-shrink-0">
       <div className="p-4 border-b border-gray-200 dark:border-gray-700">
         <Link href="/admin/dashboard" className="flex items-center">
           <span className="text-xl font-bold text-gray-800 dark:text-white">

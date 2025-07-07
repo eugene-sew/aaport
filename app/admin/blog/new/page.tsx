@@ -28,8 +28,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, Save, Eye, Upload } from "lucide-react";
 import { slugify } from "@/lib/utils";
 
-// Import safe client-side only Froala Editor component
-import SafeFroalaEditor from "@/components/SafeFroalaEditor";
+// Import the new robust Froala Editor component
+import FroalaEditorWrapper from "@/components/editor/FroalaEditorWrapper";
 
 export default function NewBlogPage() {
   const router = useRouter();
@@ -256,9 +256,9 @@ export default function NewBlogPage() {
                     <TabsTrigger value="preview">Preview</TabsTrigger>
                   </TabsList>
                   <TabsContent value="editor" className="border rounded-md p-4">
-                    <SafeFroalaEditor
-                      content={content}
-                      onContentChange={handleContentChange}
+                    <FroalaEditorWrapper
+                      model={content}
+                      onModelChange={handleContentChange}
                     />
                   </TabsContent>
                   <TabsContent

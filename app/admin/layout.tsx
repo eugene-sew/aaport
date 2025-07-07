@@ -21,16 +21,18 @@ export default function AdminLayout({
   const router = useRouter();
   const pathname = usePathname();
 
-  const isLoginPage = pathname === '/admin/login';
+  // Define public paths that don't require authentication
+  const publicPaths = ['/admin/login', '/admin/forgot-password', '/admin/reset-password'];
+  const isPublicPage = publicPaths.includes(pathname);
 
   useEffect(() => {
     if (loading) return; // Wait until authentication state is loaded
 
-    // If not authenticated and not on the login page, redirect to login
-    if (!session && !isLoginPage) {
+    // If not authenticated and not on a public page, redirect to login
+    if (!session && !isPublicPage) {
       router.push('/admin/login');
     }
-  }, [session, loading, router, isLoginPage]);
+  }, [session, loading, router, pathname, isPublicPage]);
 
   // While loading, show a spinner
   if (loading) {
@@ -43,8 +45,8 @@ export default function AdminLayout({
     );
   }
 
-  // If on the login page, render it without the admin sidebar/header
-  if (isLoginPage) {
+  // If on a public page, render it without the admin sidebar/header
+  if (isPublicPage) {
     return (
       <div className={inter.className}>
         {children}

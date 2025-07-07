@@ -40,11 +40,7 @@ export default function AboutPage() {
                 intersection of neurodiversity, culture, and disability
                 acceptance, particularly how these factors influence the mental
                 health and college experiences of transitioning youth and
-                families and marginalized groups. Currently, Asmau's research
-                examines cultural identity and disability acceptance among
-                autistic students in Ghana. She aims to advance inclusive
-                practices informed by both academic scholarship and lived
-                experience.
+                families and marginalized groups.
               </p>
               <p className="mb-4 text-muted-foreground">
                 Asmau's 14 years of experience in teaching, clinical work,
