@@ -30,8 +30,6 @@ export default function ResetPasswordPage() {
     // on initial load. We just need to listen for the PASSWORD_RECOVERY event.
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'PASSWORD_RECOVERY') {
-        // The user is now signed in and can update their password.
-        // No need to do anything here, the form will handle the update.
       }
     });
 

@@ -15,12 +15,13 @@ export const metadata: Metadata = {
     "Portfolio of Asmau Ayub, a Licensed Counseling Psychologist and PhD candidate in Counselor Education & Supervision",
   openGraph: {
     title: "Asmau Ayub - Licensed Counseling Psychologist",
-    description: "Portfolio of Asmau Ayub, a Licensed Counseling Psychologist and PhD candidate in Counselor Education & Supervision",
-    url: "https://www.asmauayub.com", // Replace with your actual domain
+    description:
+      "Portfolio of Asmau Ayub, a Licensed Counseling Psychologist and PhD candidate in Counselor Education & Supervision",
+    url: "https://www.asmauayub.com",
     siteName: "Asmau Ayub's Portfolio",
     images: [
       {
-        url: "/og-image.png", // Points to public/og-image.png
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Asmau Ayub's Professional Portfolio",
@@ -32,11 +33,12 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Asmau Ayub - Licensed Counseling Psychologist",
-    description: "Portfolio of Asmau Ayub, a Licensed Counseling Psychologist and PhD candidate in Counselor Education & Supervision",
-    images: ["/og-image.png"], // Points to public/og-image.png
+    description:
+      "Portfolio of Asmau Ayub, a Licensed Counseling Psychologist and PhD candidate in Counselor Education & Supervision",
+    images: ["/og-image.png"],
   },
   icons: {
-    icon: "/logo.png", // Points to public/logo.png
+    icon: "/logo.png",
     shortcut: "/logo.png",
     apple: "/logo.png",
   },
@@ -46,9 +48,9 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
 };
