@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 
@@ -26,7 +26,8 @@ import {
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle, CheckCircle2, ArrowLeft, Loader2 } from 'lucide-react';
 
-export default function EditAwardPage({ params }: { params: { id: string } }) {
+export default function EditAwardPage() {
+  const params = useParams<{ id: string }>();
   const router = useRouter();
   const { id } = params;
 

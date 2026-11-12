@@ -12,7 +12,7 @@ import {
   GraduationCap,
   Users,
   Image,
-  Settings,
+  Mail,
   FolderArchive,
   MessageSquare,
   Award,
@@ -104,9 +104,9 @@ const AdminSidebar = () => {
       badge: unreadCount > 0 ? unreadCount : undefined,
     },
     {
-      title: "Settings",
-      icon: <Settings className="w-5 h-5" />,
-      href: "/admin/settings",
+      title: "Newsletter",
+      icon: <Mail className="w-5 h-5" />,
+      href: "/admin/newsletter",
     },
   ];
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useProfessionalLeadershipTables } from "@/hooks/useProfessionalLeadershipTables";
 import { useAuth } from "@/hooks/useAuth";
@@ -73,7 +73,8 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-export default function EditSupervisionPage({ params }: { params: { id: string } }) {
+export default function EditSupervisionPage() {
+  const params = useParams<{ id: string }>();
   const router = useRouter();
   const { user } = useAuth();
   const { useSupervision, useUpdateSupervision } = useProfessionalLeadershipTables();
@@ -136,7 +137,7 @@ export default function EditSupervisionPage({ params }: { params: { id: string }
         ...values,
         start_date: values.start_date ? values.start_date.toISOString() : undefined,
         end_date: values.end_date ? values.end_date.toISOString() : undefined,
-        hours: values.hours || null,
+        hours: values.hours ?? undefined,
       });
 
       toast({
@@ -423,8 +424,7 @@ export default function EditSupervisionPage({ params }: { params: { id: string }
                                 disabled={(date) =>
                                   date > new Date() ||
                                   date < new Date("1900-01-01") ||
-                                  (form.getValues("start_date") &&
-                                    date < form.getValues("start_date"))
+                                  (!!form.getValues("start_date") && date < form.getValues("start_date")!)
                                 }
                                 initialFocus
                               />

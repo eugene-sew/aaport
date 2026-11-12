@@ -163,18 +163,20 @@ export default function CategoriesPage() {
     }
   };
 
-  const contentTypeIcons = {
+  const contentTypeIcons: Record<ContentType, React.ReactNode> = {
     blog: <FileText className="h-4 w-4" />,
     research: <BookOpen className="h-4 w-4" />,
     teaching: <GraduationCap className="h-4 w-4" />,
     leadership: <Users className="h-4 w-4" />,
+    counseling: <Users className="h-4 w-4" />,
   };
 
-  const contentTypeLabels = {
+  const contentTypeLabels: Record<ContentType, string> = {
     blog: 'Blog',
     research: 'Research',
     teaching: 'Teaching',
     leadership: 'Leadership',
+    counseling: 'Counseling',
   };
 
   return (

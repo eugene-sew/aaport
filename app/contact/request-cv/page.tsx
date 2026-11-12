@@ -55,8 +55,24 @@ export default function RequestCVPage() {
     setIsSubmitting(true);
 
     try {
-      // This would be replaced with actual Supabase integration
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // CV requests are stored as contact messages so they show up in
+      // Admin → Contacts alongside everything else.
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: `CV request (${formData.purpose})`,
+          message: [
+            `Organization: ${formData.organization || "—"}`,
+            `Purpose: ${formData.purpose}`,
+            "",
+            formData.message || "(no message)",
+          ].join("\n"),
+        }),
+      });
+      if (!response.ok) throw new Error("CV request failed");
 
       toast({
         title: "Request Sent",

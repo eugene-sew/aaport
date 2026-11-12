@@ -57,19 +57,19 @@ Browser ──(anon key / user JWT)──▶ Supabase REST + Auth + Storage
 ```
 
 - **Client:** `lib/supabase.ts` creates one shared client. Data access is wrapped in hooks (`hooks/use*.ts`) and two Zustand stores (`store/`).
-- **Auth:** Supabase email/password plus Google OAuth (`hooks/useAuth.ts`). Forgot/reset-password uses Supabase's email flow.
+- **Auth:** Supabase email/password only (`hooks/useAuth.ts`). **Public sign-up is disabled** in Supabase (Auth → Sign In / Providers), and the login page has no sign-up option. Add new admins from Supabase → Authentication → Users → *Invite user*. Forgot/reset-password uses Supabase's email flow, which links back to the **Site URL** set in Auth → URL Configuration (currently `https://aaport.vercel.app`).
 - **Admin protection:** `app/admin/layout.tsx` redirects to `/admin/login` when there is no session. This check runs only in the browser; the real protection is RLS.
 - **API routes:**
 
 | Route | Purpose |
 |---|---|
-| `POST /api/contact` | Saves contact-form messages into `contact_messages` using the service role key |
+| `POST /api/contact` | Saves contact-form messages **and CV requests** (subject "CV request (…)") into `contact_messages` using the service role key. Both show up in Admin → Contacts. |
+| `POST /api/newsletter` | Validates the email and adds it to `newsletter_subscribers` (service role). Duplicate emails count as success. |
 | `GET /api/keepalive` | Runs a tiny `select` on `categories` so Supabase sees activity. Called by Vercel Cron. |
-| `GET /api/test-add-presentation` | Leftover test route that inserts a dummy row. **Should be deleted.** |
 
 ### Database tables (`public` schema)
 
-The authoritative schema is **`supabase/schema.sql`**, dumped from production on 2026-11-12 (tables, RLS policies, functions and triggers). The older files in `scripts/`, `migrations/` and `supabase/setup.sql` are incomplete and partly out of date. Don't use them to rebuild the database.
+The authoritative schema is **`supabase/schema.sql`** (dumped from production on 2026-11-12) **plus** every file in **`supabase/migrations/`** applied after it, in filename order. Put future database changes in a new migration file, not in ad-hoc SQL. The older files in `scripts/`, `migrations/` and `supabase/setup.sql` are incomplete and partly out of date. Don't use them to rebuild the database.
 
 | Table | Used by |
 |---|---|
@@ -80,10 +80,11 @@ The authoritative schema is **`supabase/schema.sql`**, dumped from production on
 | `contents`, `categories` | Blog posts and categories |
 | `contact_messages` | Contact form → admin → Contacts |
 | `media` | admin → Media library |
+| `newsletter_subscribers` | Footer signup → admin → Newsletter (copy emails / export CSV) |
 | `contact_submissions`, `cv_requests` | Created by the old setup script, **not used** by the code |
 
 ### Storage buckets
-`assets` (public) and `media` (public) hold uploaded images. `publications` and `avatars` exist but are empty.
+`assets` (public) and `media` (public) hold uploaded images; blog-editor images go to `media/blog/`. Anyone can read them, but only logged-in admins can upload, replace or delete (policies in `supabase/migrations/20261112120000_…sql`). `publications` and `avatars` exist but are empty.
 
 ### Admin accounts
 There are three Supabase Auth users (the developer, a second developer account, and Asmau's own account). Manage them in Supabase → Authentication → Users.
@@ -118,6 +119,7 @@ L=postgresql://postgres:postgres@127.0.0.1:54322/postgres
 psql "$L" -f schema_public.sql          # tables + RLS ("schema public already exists" error is harmless)
 psql "$L" -f data_auth_storage.sql      # users + buckets (errors on *migrations* / vector tables are harmless)
 psql "$L" -f data_public.sql            # site data
+for f in supabase/migrations/*.sql; do psql "$L" -f "$f"; done   # changes made after the dump
 ```
 
 Storage files aren't part of `pg_dump`. Upload them to the local buckets via the Storage API, using the service role key and `x-upsert: true`. Rows that store full image URLs (`community_projects.image_url`, `research_presentations.featured_image`) point at production storage. Rewrite them to `http://127.0.0.1:54321` if you want everything local.
@@ -163,22 +165,12 @@ Download storage files separately (both image buckets are public: `/storage/v1/o
 
 ## Known issues
 
-| Issue | Where | Notes |
-|---|---|---|
-| `asmauayub.com` doesn't resolve | DNS / registrar | Domain probably lapsed. Renew it, or remove it from Vercel. Site metadata still points to it (`app/layout.tsx`). |
-| Password-reset emails link to the dead domain | Supabase → Auth → URL Configuration | Set **Site URL** to the working production URL and add `http://localhost:3000/**` to Redirect URLs. |
-| **Request CV form is fake** | `app/contact/request-cv/page.tsx` | Shows "Request Sent" but saves nothing (`setTimeout` placeholder). Requests are lost. |
-| **Newsletter signup is fake** | `components/footer.tsx` | Same placeholder; nothing is stored. |
-| `/awards` is statically rendered | `app/awards/page.tsx` | Award data is baked in at build time, so admin changes only show after the next deploy. Add `export const revalidate = 60` to fix. |
-| Public test route can insert rows | `app/api/test-add-presentation` | Delete it. |
-| Test data visible on the public site | `research_presentations` | Two rows titled "Test" / "Test 2". |
-| Anyone may be able to sign up | Supabase → Auth → Providers | RLS gives *any* logged-in user write access. Disable new sign-ups so only existing admins can log in. |
-| `/new`, `app/pagee.tsx`, `pagen.tsx`, `pagenew.tsx` | `app/` | Old drafts. `/new` throws hydration errors. Safe to delete. |
-| Build ignores TS/ESLint errors | `next.config.mjs` | `ignoreBuildErrors: true`, so broken code can still deploy. |
-| Empty-state missing | `/research` Articles & Books tabs | The tabs render blank when there's no data. |
-| Next.js security updates | `package.json` | Vercel **refuses to deploy** vulnerable Next.js versions (this happened in Nov 2026; fixed by moving 15.2.4 → 15.2.9). Keep `next` patched. |
-
----
+| Issue | Notes |
+|---|---|
+| `asmauayub.com` doesn't resolve | The new developer will set up a new domain. When they do: add it in Vercel, update **Site URL** / Redirect URLs in Supabase → Auth → URL Configuration, and update the Open Graph `url` in `app/layout.tsx`, which still points at the old domain. |
+| Two dependency advisories remain | `postcss` (bundled inside Next.js, build-time only) and `zod` (admin form validation in the browser). Neither can be exploited by site visitors here. Both fixes are major-version upgrades (Next 16, zod 4). Do them deliberately, with testing. Keep `next` on the latest 15.5.x patch until then: Vercel **refuses to deploy** Next.js versions with known critical vulnerabilities. |
+| No ESLint setup | `next.config.mjs` still skips ESLint during builds because the repo has no ESLint config. TypeScript errors **do** fail the build. |
+| `research_works` table is unused | No public page reads it. It holds one leftover row titled "Test research". |
 
 ## Handover checklist
 

@@ -173,6 +173,18 @@ const PresentationCard = ({
   </Card>
 );
 
+function EmptyTab({ label }: { label: string }) {
+  return (
+    <div className="rounded-2xl border border-dashed py-16 text-center">
+      <BookOpen className="mx-auto mb-3 h-8 w-8 text-muted-foreground" />
+      <p className="font-medium">No {label} yet</p>
+      <p className="mt-1 text-sm text-muted-foreground">
+        New work will appear here as it&apos;s published.
+      </p>
+    </div>
+  );
+}
+
 export default function ResearchPage() {
   const {
     useArticles,
@@ -197,8 +209,6 @@ export default function ResearchPage() {
   const [activeTab, setActiveTab] = useState<string>("all");
 
   // Debug the presentations data
-  console.log("Presentations data:", presentations);
-  console.log("Presentations loading:", presentationsLoading);
 
   // Check if any data is loading
   const isLoading = articlesLoading || booksLoading || presentationsLoading;
@@ -336,6 +346,7 @@ export default function ResearchPage() {
 
               {/* Articles Tab */}
               <TabsContent value="articles" className="space-y-4">
+                {!articles?.length && <EmptyTab label="articles" />}
                 {articles?.map((article) => (
                   <Card
                     key={article.id}
@@ -384,6 +395,7 @@ export default function ResearchPage() {
 
               {/* Books & Chapters Tab */}
               <TabsContent value="books" className="space-y-4">
+                {!books?.length && <EmptyTab label="books or chapters" />}
                 {books?.map((book) => (
                   <Card key={book.id} className="overflow-hidden rounded-2xl">
                     <CardHeader>
@@ -431,6 +443,8 @@ export default function ResearchPage() {
               <TabsContent value="presentations">
                 {presentationsLoading ? (
                   <ResearchSkeleton />
+                ) : !presentations?.length ? (
+                  <EmptyTab label="presentations" />
                 ) : (
                   <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {presentations?.map((presentation) => (

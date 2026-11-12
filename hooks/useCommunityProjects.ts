@@ -58,7 +58,9 @@ export function useCommunityProjects() {
         let image_url = projectData.image_url || "";
         if (imageFile) {
           const filePath = `community-projects/${Date.now()}_${imageFile.name}`;
-          image_url = await uploadAsset(imageFile, filePath);
+          const uploaded = await uploadAsset(imageFile, filePath);
+          if (!uploaded) throw new Error("Image upload failed");
+          image_url = uploaded;
         }
         
         // Only include database fields in the insert
@@ -98,7 +100,9 @@ export function useCommunityProjects() {
         let image_url = input.image_url || "";
         if (input.imageFile) {
           const filePath = `community-projects/${Date.now()}_${input.imageFile.name}`;
-          image_url = await uploadAsset(input.imageFile, filePath);
+          const uploaded = await uploadAsset(input.imageFile, filePath);
+          if (!uploaded) throw new Error("Image upload failed");
+          image_url = uploaded;
         }
         const { data, error } = await supabase
           .from("community_projects")

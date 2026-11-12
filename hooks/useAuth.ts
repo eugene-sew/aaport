@@ -3,8 +3,7 @@ import {
   User,
   Session,
   AuthError,
-  AuthResponse,
-  OAuthResponse
+  AuthResponse
 } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 
@@ -66,39 +65,6 @@ export function useAuth() {
     }
   };
 
-  const signInWithGoogle = async (): Promise<OAuthResponse> => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${window.location.origin}/admin/dashboard`,
-        },
-      });
-      if (response.error) {
-        setError(response.error);
-      }
-      return response;
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const signUp = async (email: string, password: string): Promise<AuthResponse> => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await supabase.auth.signUp({ email, password });
-      if (response.error) {
-        setError(response.error);
-      }
-      return response;
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const signOut = async () => {
     setLoading(true);
     try {
@@ -117,8 +83,6 @@ export function useAuth() {
     loading,
     error,
     signIn,
-    signInWithGoogle,
-    signUp,
     signOut,
   };
 }

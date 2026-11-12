@@ -3,6 +3,9 @@ import { Award as AwardIcon, Calendar } from "lucide-react";
 import { Metadata } from "next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+// Re-fetch awards at most once a minute so admin edits show without a redeploy.
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Awards & Recognitions | Asmau Ayub",
   description:

@@ -53,10 +53,10 @@ const FroalaEditorWrapper = ({ onModelChange, model }: FroalaEditorProps) => {
 
   const uploadImageToSupabase = async (file: File): Promise<string | null> => {
     const fileName = `${Date.now()}_${file.name}`;
-    const filePath = `images/${fileName}`;
+    const filePath = `blog/${fileName}`;
 
     const { data, error } = await supabase.storage
-      .from('blogs') // As per your working example
+      .from('media')
       .upload(filePath, file, {
         cacheControl: '3600',
         upsert: false,
@@ -68,7 +68,7 @@ const FroalaEditorWrapper = ({ onModelChange, model }: FroalaEditorProps) => {
     }
 
     const { data: publicUrlData } = supabase.storage
-      .from('blogs')
+      .from('media')
       .getPublicUrl(filePath);
 
     return publicUrlData.publicUrl;

@@ -114,7 +114,7 @@ export default function AddSupervisionPage() {
         user_id: user.id,
         start_date: values.start_date ? values.start_date.toISOString() : undefined,
         end_date: values.end_date ? values.end_date.toISOString() : undefined,
-        hours: values.hours || null,
+        hours: values.hours ?? undefined,
       });
 
       toast({
@@ -350,8 +350,7 @@ export default function AddSupervisionPage() {
                               disabled={(date) =>
                                 date > new Date() ||
                                 date < new Date("1900-01-01") ||
-                                (form.getValues("start_date") &&
-                                  date < form.getValues("start_date"))
+                                (!!form.getValues("start_date") && date < form.getValues("start_date")!)
                               }
                               initialFocus
                             />

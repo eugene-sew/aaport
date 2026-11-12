@@ -28,8 +28,13 @@ export default function Footer() {
     setIsSubmitting(true);
 
     try {
-      // This would be replaced with actual Supabase integration
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.message);
 
       toast({
         title: "Success!",
@@ -40,7 +45,10 @@ export default function Footer() {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to subscribe. Please try again.",
+        description:
+          error instanceof Error && error.message
+            ? error.message
+            : "Failed to subscribe. Please try again.",
         variant: "destructive",
       });
     } finally {
