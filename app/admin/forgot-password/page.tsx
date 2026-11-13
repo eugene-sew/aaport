@@ -31,7 +31,7 @@ export default function ForgotPasswordPage() {
     setSuccess(false);
 
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `https://www.asmauayub.com/admin/reset-password`,
+      redirectTo: `${window.location.origin}/admin/reset-password`,
     });
 
     setLoading(false);

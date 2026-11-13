@@ -4,6 +4,8 @@ Personal/academic portfolio for Asmau Ayub (Licensed Counseling Psychologist, Ph
 
 Originally scaffolded with v0.dev, then developed by hand. v0 sync is no longer used.
 
+> **Deploying, changing the domain or moving to a new Supabase project? Start with [DEPLOY.md](DEPLOY.md).**
+
 ---
 
 ## Stack
@@ -154,6 +156,8 @@ docker run --rm -e DB="$DB" -v "$PWD/backup":/out postgres:15 sh -c '
   pg_dump "$DB" --schema=public --schema-only --no-owner --no-privileges -f /out/schema_public.sql &&
   pg_dump "$DB" --schema=public --data-only  --no-owner -f /out/data_public.sql &&
   pg_dump "$DB" --schema=auth --schema=storage --data-only --no-owner -f /out/data_auth_storage.sql &&
+  pg_dump "$DB" --data-only --no-owner -t auth.users -f /out/auth_users.sql &&
+  pg_dump "$DB" --data-only --no-owner -t auth.identities >> /out/auth_users.sql &&
   pg_dump "$DB" -Fc --no-owner -f /out/full.dump'
 ```
 
@@ -167,7 +171,7 @@ Download storage files separately (both image buckets are public: `/storage/v1/o
 
 | Issue | Notes |
 |---|---|
-| `asmauayub.com` doesn't resolve | The new developer will set up a new domain. When they do: add it in Vercel, update **Site URL** / Redirect URLs in Supabase → Auth → URL Configuration, and update the Open Graph `url` in `app/layout.tsx`, which still points at the old domain. |
+| `asmauayub.com` doesn't resolve | The new developer will set up a new domain. No code changes needed: follow [DEPLOY.md → B](DEPLOY.md#b-use-a-new-domain). |
 | Two dependency advisories remain | `postcss` (bundled inside Next.js, build-time only) and `zod` (admin form validation in the browser). Neither can be exploited by site visitors here. Both fixes are major-version upgrades (Next 16, zod 4). Do them deliberately, with testing. Keep `next` on the latest 15.5.x patch until then: Vercel **refuses to deploy** Next.js versions with known critical vulnerabilities. |
 | No ESLint setup | `next.config.mjs` still skips ESLint during builds because the repo has no ESLint config. TypeScript errors **do** fail the build. |
 | `research_works` table is unused | No public page reads it. It holds one leftover row titled "Test research". |

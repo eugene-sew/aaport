@@ -9,7 +9,11 @@ import QueryProvider from "@/providers/QueryProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
+// Public address of the site, used for link previews. Set NEXT_PUBLIC_SITE_URL when the domain changes.
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://aaport.vercel.app";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Asmau Ayub - Licensed Counseling Psychologist",
   description:
     "Portfolio of Asmau Ayub, a Licensed Counseling Psychologist and PhD candidate in Counselor Education & Supervision",
@@ -17,7 +21,7 @@ export const metadata: Metadata = {
     title: "Asmau Ayub - Licensed Counseling Psychologist",
     description:
       "Portfolio of Asmau Ayub, a Licensed Counseling Psychologist and PhD candidate in Counselor Education & Supervision",
-    url: "https://www.asmauayub.com",
+    url: siteUrl,
     siteName: "Asmau Ayub's Portfolio",
     images: [
       {
